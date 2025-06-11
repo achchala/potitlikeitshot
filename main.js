@@ -138,9 +138,18 @@ const products = [
   },
 ];
 
+products.forEach((p) => (p.sizes = ["Small", "Medium", "Large"]));
+
 let selectedProduct = null;
 let selectedSize = null;
 let searchTerm = "";
+
+function getProductPrice(size) {
+  if (size === "Small") return 10;
+  if (size === "Medium") return 20;
+  if (size === "Large") return 30;
+  return 0;
+}
 
 function renderProducts() {
   const list = document.getElementById("product-list");
@@ -167,14 +176,37 @@ function renderProducts() {
     card.innerHTML = `
       <div class="product-image-container">
         <img src="${product.image}" alt="${product.name}" class="product-img" />
-        <button class="add-btn" data-id="${product.id}" title="Add to Cart">+</button>
       </div>
       <div class="product-name">${product.name}</div>
+      <div class="product-card-price-row" style="display:none;text-align:center;font-weight:600;color:var(--primary-dark);margin-top:0.2rem;margin-bottom:0.1rem;font-size:1.08rem;"></div>
+      <div class="product-card-sizes">
+        <button class="size-btn" data-size="Small">S</button>
+        <button class="size-btn" data-size="Medium">M</button>
+        <button class="size-btn" data-size="Large">L</button>
+      </div>
+      <button class="add-btn" data-id="${product.id}" title="Add to Cart">Add to Cart</button>
     `;
+    let selectedCardSize = "Small";
+    const priceRow = card.querySelector(".product-card-price-row");
+    priceRow.style.display = "block";
+    const updateCardPrice = () => {
+      priceRow.textContent = `$${getProductPrice(selectedCardSize)}`;
+      card.querySelectorAll(".size-btn").forEach((btn) => {
+        btn.classList.toggle("selected", btn.dataset.size === selectedCardSize);
+      });
+    };
+    card.querySelectorAll(".size-btn").forEach((btn) => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        selectedCardSize = btn.dataset.size;
+        updateCardPrice();
+      };
+    });
+    updateCardPrice();
     card.querySelector(".add-btn").onclick = (e) => {
       e.stopPropagation();
-      addToCart(product.id, product.sizes[0]);
-      showAddToCartFeedbackModal(product.name, product.sizes[0]);
+      addToCart(product.id, selectedCardSize);
+      showAddToCartFeedbackModal(product.name, selectedCardSize);
     };
     card.querySelector(".product-image-container").onclick = () =>
       openProductModal(product.id);
@@ -196,7 +228,6 @@ function openProductModal(productId) {
   const product = products.find((p) => p.id === productId);
   if (!product) return;
   selectedProduct = product;
-  // If previously selected size for this product, use it; else default to first
   const cart = getCart();
   const cartItem = cart.find((i) => i.id === productId);
   selectedSize = cartItem ? cartItem.size : product.sizes[0];
@@ -205,9 +236,10 @@ function openProductModal(productId) {
   document.getElementById("modal-product-name").textContent = product.name;
   document.getElementById("modal-product-description").textContent =
     product.description;
-  document.getElementById("modal-product-price").textContent = `$${
-    product.price ? product.price.toFixed(2) : ""
-  }`;
+  // Price above sizes
+  document.getElementById(
+    "modal-product-price"
+  ).textContent = `$${getProductPrice(selectedSize)}`;
   // Tags
   const tagsDiv = document.getElementById("modal-product-tags");
   tagsDiv.innerHTML = "";
@@ -223,11 +255,17 @@ function openProductModal(productId) {
   product.sizes.forEach((size) => {
     const sizeBtn = document.createElement("button");
     sizeBtn.className = "size-btn" + (size === selectedSize ? " selected" : "");
-    sizeBtn.textContent = size;
+    sizeBtn.textContent = size[0];
     sizeBtn.onclick = (e) => {
       e.stopPropagation();
       selectedSize = size;
-      openProductModal(productId); // re-render to update selected
+      // Update price and highlight only, do not re-call openProductModal
+      document.getElementById(
+        "modal-product-price"
+      ).textContent = `$${getProductPrice(selectedSize)}`;
+      sizesDiv.querySelectorAll(".size-btn").forEach((btn) => {
+        btn.classList.toggle("selected", btn.textContent === size[0]);
+      });
     };
     sizesDiv.appendChild(sizeBtn);
   });
@@ -287,12 +325,13 @@ function renderCart() {
     cart.forEach((item) => {
       const product = products.find((p) => p.id === item.id);
       if (!product) return;
-      total += (product.price || 0) * item.qty;
+      const price = getProductPrice(item.size);
+      total += price * item.qty;
       const div = document.createElement("div");
       div.className = "cart-item";
       div.innerHTML = `
         <span>${product.name} (${item.size}) x ${item.qty}</span>
-        <span>$${((product.price || 0) * item.qty).toFixed(2)}</span>
+        <span>$${(price * item.qty).toFixed(2)}</span>
         <button class="remove-btn" data-id="${item.id}" data-size="${
         item.size
       }">&times;</button>
