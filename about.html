@@ -40,14 +40,52 @@
           space. Whether you're a seasoned plant parent or just starting out,
           we're here to help your plants live their best life!
         </p>
-        <img
-          src="images/potlogo.png"
-          alt="Pot Logo"
-          style="height: 80px; margin: 1.5rem auto; display: block"
-        />
+        <img src="images/potlogo.png" alt="Pot Logo" class="about-main-logo" />
         <p style="color: #e75480; font-weight: 600">
           Let your plants live their best life!
         </p>
+        <div class="carousel-container">
+          <div class="carousel">
+            <button class="carousel-arrow left" aria-label="Previous image">
+              &#8592;
+            </button>
+            <div class="carousel-images">
+              <img
+                src="images/artistwip1.png"
+                alt="Artist work in progress 1"
+                class="carousel-image active"
+              />
+              <img
+                src="images/artistwip2.png"
+                alt="Artist work in progress 2"
+                class="carousel-image"
+              />
+              <img
+                src="images/artistwip3.png"
+                alt="Artist work in progress 3"
+                class="carousel-image"
+              />
+              <img
+                src="images/artistwip4.png"
+                alt="Artist work in progress 4"
+                class="carousel-image"
+              />
+            </div>
+            <button class="carousel-arrow right" aria-label="Next image">
+              &#8594;
+            </button>
+          </div>
+          <div class="carousel-indicators">
+            <span class="carousel-dot active"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+            <span class="carousel-dot"></span>
+          </div>
+          <div class="carousel-caption">
+            Behind the scenes content of local Waterloo artists in the painting
+            of these pots.
+          </div>
+        </div>
       </div>
     </main>
     <footer class="site-footer">
@@ -85,6 +123,27 @@
         if (badge) badge.textContent = count;
       }
       updateCartCount();
+
+      // Carousel functionality
+      (function () {
+        const images = document.querySelectorAll(".carousel-image");
+        const dots = document.querySelectorAll(".carousel-dot");
+        const left = document.querySelector(".carousel-arrow.left");
+        const right = document.querySelector(".carousel-arrow.right");
+        let current = 0;
+        function show(idx) {
+          images.forEach((img, i) => img.classList.toggle("active", i === idx));
+          dots.forEach((dot, i) => dot.classList.toggle("active", i === idx));
+          current = idx;
+        }
+        left.addEventListener("click", () =>
+          show((current + images.length - 1) % images.length)
+        );
+        right.addEventListener("click", () =>
+          show((current + 1) % images.length)
+        );
+        dots.forEach((dot, i) => dot.addEventListener("click", () => show(i)));
+      })();
     </script>
   </body>
 </html>
