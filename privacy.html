@@ -3,89 +3,56 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Us - pot it like it's hot</title>
-    <meta
-      name="description"
-      content="Contact us about our beautiful plant pots and planters."
-    />
+    <title>Privacy Policy - pot it like it's hot</title>
+    <meta name="description" content="Privacy policy for pot it like it's hot." />
     <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
     <link rel="stylesheet" href="style.css" />
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-8LZT78243L"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-8LZT78243L");
-    </script>
   </head>
   <body>
     <header>
       <div class="container header-flex">
         <div class="header-left">
-          <a href="index.html" class="logo-link"
-            ><img src="images/potlogo.png" alt="Pot Logo" class="pot-logo"
-          /></a>
-          <a href="index.html" class="site-title-link"
-            ><h1>pot it like it's hot</h1></a
-          >
+          <a href="index.html" class="logo-link"><img src="images/potlogo.png" alt="Pot Logo" class="pot-logo" /></a>
+          <a href="index.html" class="site-title-link"><h1>pot it like it's hot</h1></a>
         </div>
         <div class="header-right">
           <a href="about.html" class="about-link">ℹ️</a>
-          <button id="cart-btn" aria-label="View cart">
-            🛒 <span id="cart-count" class="cart-badge">0</span>
-          </button>
+          <a href="contact.html" class="contact-link">📧</a>
+          <button id="cart-btn" aria-label="View cart">🛒 <span id="cart-count" class="cart-badge">0</span></button>
         </div>
       </div>
     </header>
     <main>
-      <div class="container">
-        <h2 style="text-align: center; margin: 2rem 0;">Contact Us</h2>
-        <div class="contact-form-container" style="max-width: 600px; margin: 0 auto; padding: 2rem;">
-          <form id="contact-form" class="contact-form">
-            <div class="form-group">
-              <label for="name">Name:</label>
-              <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-              <label for="email">Email:</label>
-              <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-              <label for="subject">Subject:</label>
-              <select id="subject" name="subject" required>
-                <option value="">Select a subject</option>
-                <option value="product-inquiry">Product Inquiry</option>
-                <option value="custom-order">Custom Order</option>
-                <option value="wholesale">Wholesale Inquiry</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="message">Message:</label>
-              <textarea id="message" name="message" rows="6" required></textarea>
-            </div>
-            <button type="submit" class="checkout-btn" style="width: 100%;">Send Message</button>
-          </form>
+      <div class="container" style="max-width: 800px; margin: 2rem auto; padding: 0 1rem;">
+        <h2 style="text-align: center; margin-bottom: 2rem;">Privacy Policy</h2>
+        <div style="background: #f9f9f9; padding: 2rem; border-radius: 12px;">
+          <p>We value your privacy and are committed to protecting your personal information. This policy explains how we collect, use, and safeguard your data when you use our website.</p>
+          <h3>Information We Collect</h3>
+          <ul>
+            <li>Personal information you provide (name, email, address, etc.)</li>
+            <li>Order and payment details</li>
+            <li>Usage data (pages visited, actions taken)</li>
+          </ul>
+          <h3>How We Use Your Information</h3>
+          <ul>
+            <li>To process orders and provide customer service</li>
+            <li>To send updates, promotions, or newsletters (if you opt in)</li>
+            <li>To improve our website and services</li>
+          </ul>
+          <h3>Cookies</h3>
+          <p>We use cookies to enhance your browsing experience. You can disable cookies in your browser settings.</p>
+          <h3>Third-Party Services</h3>
+          <p>We may use third-party services (like payment processors or analytics) that have their own privacy policies.</p>
+          <h3>Your Rights</h3>
+          <ul>
+            <li>You can request to view, update, or delete your personal data at any time.</li>
+            <li>You can unsubscribe from marketing emails at any time.</li>
+          </ul>
+          <h3>Contact</h3>
+          <p>If you have any questions about our privacy policy, please <a href="contact.html" style="color: #4CAF50; text-decoration: none;">contact us</a>.</p>
         </div>
       </div>
     </main>
-    <div id="cart-modal" class="modal hidden">
-      <div class="modal-content">
-        <span class="close" id="close-cart">&times;</span>
-        <h2>Your Cart</h2>
-        <div id="cart-items"></div>
-        <div class="cart-total">
-          <span>Total:</span> <span id="cart-total">$0.00</span>
-        </div>
-        <a href="checkout.html" class="checkout-btn">Checkout</a>
-      </div>
-    </div>
     <footer class="site-footer">
       <div>
         pot it like it's hot &mdash; "Let your plants live their best life!"
@@ -97,6 +64,17 @@
         <button id="subscribe-btn" class="checkout-btn" style="margin-top: 1rem;">Subscribe to Email List</button>
       </div>
     </footer>
+    <div id="cart-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close" id="close-cart">&times;</span>
+        <h2>Your Cart</h2>
+        <div id="cart-items"></div>
+        <div class="cart-total">
+          <span>Total:</span> <span id="cart-total">$0.00</span>
+        </div>
+        <a href="checkout.html" class="checkout-btn">Checkout</a>
+      </div>
+    </div>
     <div id="subscribe-modal" class="modal hidden">
       <div class="modal-content" style="max-width: 400px;">
         <span class="close" id="close-subscribe">&times;</span>
@@ -109,7 +87,6 @@
       </div>
     </div>
     <script src="main.js"></script>
-    <script src="contact.js"></script>
     <script src="cart.js"></script>
     <script src="cart-modal.js"></script>
     <script>

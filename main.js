@@ -576,3 +576,9 @@ window.addEventListener("DOMContentLoaded", function () {
 // Initial render
 renderProducts();
 updateCartCount();
+
+// Update cart count when adding/removing items
+function updateCart() {
+  renderCart();
+  updateCartCount();
+}

@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Us - pot it like it's hot</title>
+    <title>Shipping & Returns - pot it like it's hot</title>
     <meta
       name="description"
-      content="Contact us about our beautiful plant pots and planters."
+      content="Information about shipping and returns for our plant pots and planters."
     />
     <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
     <link rel="stylesheet" href="style.css" />
@@ -37,6 +37,7 @@
         </div>
         <div class="header-right">
           <a href="about.html" class="about-link">ℹ️</a>
+          <a href="contact.html" class="contact-link">📧</a>
           <button id="cart-btn" aria-label="View cart">
             🛒 <span id="cart-count" class="cart-badge">0</span>
           </button>
@@ -45,33 +46,71 @@
     </header>
     <main>
       <div class="container">
-        <h2 style="text-align: center; margin: 2rem 0;">Contact Us</h2>
-        <div class="contact-form-container" style="max-width: 600px; margin: 0 auto; padding: 2rem;">
-          <form id="contact-form" class="contact-form">
-            <div class="form-group">
-              <label for="name">Name:</label>
-              <input type="text" id="name" name="name" required>
+        <div class="shipping-content" style="max-width: 800px; margin: 2rem auto; padding: 0 1rem;">
+          <h2 style="text-align: center; margin-bottom: 2rem;">Shipping & Returns</h2>
+          
+          <section style="margin-bottom: 3rem;">
+            <h3 style="color: #4CAF50; margin-bottom: 1rem;">Shipping Information</h3>
+            <div style="background: #f9f9f9; padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
+              <h4 style="margin-bottom: 1rem;">Standard Shipping</h4>
+              <ul style="list-style-type: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 0.5rem;">• 3-5 business days</li>
+                <li style="margin-bottom: 0.5rem;">• Free shipping on orders over $50</li>
+                <li style="margin-bottom: 0.5rem;">• $8.99 flat rate for orders under $50</li>
+                <li style="margin-bottom: 0.5rem;">• Tracking number provided</li>
+                <li>• 15% tax applied to all orders</li>
+              </ul>
             </div>
-            <div class="form-group">
-              <label for="email">Email:</label>
-              <input type="email" id="email" name="email" required>
+            <div style="background: #f9f9f9; padding: 1.5rem; border-radius: 12px;">
+              <h4 style="margin-bottom: 1rem;">Express Shipping</h4>
+              <ul style="list-style-type: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 0.5rem;">• 1-2 business days</li>
+                <li style="margin-bottom: 0.5rem;">• $15.99 flat rate</li>
+                <li style="margin-bottom: 0.5rem;">• Priority handling and tracking</li>
+                <li>• 15% tax applied to all orders</li>
+              </ul>
             </div>
-            <div class="form-group">
-              <label for="subject">Subject:</label>
-              <select id="subject" name="subject" required>
-                <option value="">Select a subject</option>
-                <option value="product-inquiry">Product Inquiry</option>
-                <option value="custom-order">Custom Order</option>
-                <option value="wholesale">Wholesale Inquiry</option>
-                <option value="other">Other</option>
-              </select>
+          </section>
+
+          <section style="margin-bottom: 3rem;">
+            <h3 style="color: #4CAF50; margin-bottom: 1rem;">Returns & Exchanges</h3>
+            <div style="background: #f9f9f9; padding: 1.5rem; border-radius: 12px;">
+              <h4 style="margin-bottom: 1rem;">Our Return Policy</h4>
+              <ul style="list-style-type: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 0.5rem;">• 30-day return window from delivery date</li>
+                <li style="margin-bottom: 0.5rem;">• Items must be unused and in original packaging</li>
+                <li style="margin-bottom: 0.5rem;">• Return shipping costs are the responsibility of the customer</li>
+                <li style="margin-bottom: 0.5rem;">• Refunds are processed within 5-7 business days</li>
+                <li style="margin-bottom: 0.5rem;">• Exchanges are subject to availability</li>
+                <li>• To initiate a return, please contact us through our <a href="contact.html" style="color: #4CAF50; text-decoration: none;">contact form</a></li>
+              </ul>
             </div>
-            <div class="form-group">
-              <label for="message">Message:</label>
-              <textarea id="message" name="message" rows="6" required></textarea>
+          </section>
+
+          <section style="margin-bottom: 3rem;">
+            <h3 style="color: #4CAF50; margin-bottom: 1rem;">Damaged Items</h3>
+            <div style="background: #f9f9f9; padding: 1.5rem; border-radius: 12px;">
+              <p style="margin-bottom: 1rem;">If your item arrives damaged, please:</p>
+              <ol style="padding-left: 1.5rem; margin: 0;">
+                <li style="margin-bottom: 0.5rem;">Take photos of the damaged item and packaging</li>
+                <li style="margin-bottom: 0.5rem;">Contact us within 48 hours of delivery</li>
+                <li>We'll arrange a replacement or refund at no cost to you</li>
+              </ol>
             </div>
-            <button type="submit" class="checkout-btn" style="width: 100%;">Send Message</button>
-          </form>
+          </section>
+
+          <section>
+            <h3 style="color: #4CAF50; margin-bottom: 1rem;">International Shipping</h3>
+            <div style="background: #f9f9f9; padding: 1.5rem; border-radius: 12px;">
+              <p style="margin-bottom: 1rem;">We currently ship to the following countries:</p>
+              <ul style="list-style-type: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 0.5rem;">• Canada</li>
+                <li style="margin-bottom: 0.5rem;">• United States</li>
+                <li>• International shipping rates vary by location</li>
+              </ul>
+              <p style="margin-top: 1rem; color: #666;">For international shipping inquiries, please <a href="contact.html" style="color: #4CAF50; text-decoration: none;">contact us</a>.</p>
+            </div>
+          </section>
         </div>
       </div>
     </main>
@@ -109,7 +148,6 @@
       </div>
     </div>
     <script src="main.js"></script>
-    <script src="contact.js"></script>
     <script src="cart.js"></script>
     <script src="cart-modal.js"></script>
     <script>

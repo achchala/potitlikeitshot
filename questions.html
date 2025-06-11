@@ -3,89 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Us - pot it like it's hot</title>
-    <meta
-      name="description"
-      content="Contact us about our beautiful plant pots and planters."
-    />
+    <title>Questions & FAQ - pot it like it's hot</title>
+    <meta name="description" content="Frequently asked questions about pot it like it's hot." />
     <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
     <link rel="stylesheet" href="style.css" />
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-8LZT78243L"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-8LZT78243L");
-    </script>
   </head>
   <body>
     <header>
       <div class="container header-flex">
         <div class="header-left">
-          <a href="index.html" class="logo-link"
-            ><img src="images/potlogo.png" alt="Pot Logo" class="pot-logo"
-          /></a>
-          <a href="index.html" class="site-title-link"
-            ><h1>pot it like it's hot</h1></a
-          >
+          <a href="index.html" class="logo-link"><img src="images/potlogo.png" alt="Pot Logo" class="pot-logo" /></a>
+          <a href="index.html" class="site-title-link"><h1>pot it like it's hot</h1></a>
         </div>
         <div class="header-right">
           <a href="about.html" class="about-link">ℹ️</a>
-          <button id="cart-btn" aria-label="View cart">
-            🛒 <span id="cart-count" class="cart-badge">0</span>
-          </button>
+          <a href="contact.html" class="contact-link">📧</a>
+          <button id="cart-btn" aria-label="View cart">🛒 <span id="cart-count" class="cart-badge">0</span></button>
         </div>
       </div>
     </header>
     <main>
-      <div class="container">
-        <h2 style="text-align: center; margin: 2rem 0;">Contact Us</h2>
-        <div class="contact-form-container" style="max-width: 600px; margin: 0 auto; padding: 2rem;">
-          <form id="contact-form" class="contact-form">
-            <div class="form-group">
-              <label for="name">Name:</label>
-              <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-              <label for="email">Email:</label>
-              <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-              <label for="subject">Subject:</label>
-              <select id="subject" name="subject" required>
-                <option value="">Select a subject</option>
-                <option value="product-inquiry">Product Inquiry</option>
-                <option value="custom-order">Custom Order</option>
-                <option value="wholesale">Wholesale Inquiry</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="message">Message:</label>
-              <textarea id="message" name="message" rows="6" required></textarea>
-            </div>
-            <button type="submit" class="checkout-btn" style="width: 100%;">Send Message</button>
-          </form>
+      <div class="container" style="max-width: 800px; margin: 2rem auto; padding: 0 1rem;">
+        <h2 style="text-align: center; margin-bottom: 2rem;">Questions & FAQ</h2>
+        <div style="background: #f9f9f9; padding: 2rem; border-radius: 12px;">
+          <h3>What types of pots do you offer?</h3>
+          <p>We offer a variety of hand-painted ceramic pots in different sizes, colors, and designs. Each pot is unique and crafted by local artists.</p>
+          <h3>How do I care for my pot?</h3>
+          <p>Our pots are durable and water-resistant. For best results, wipe clean with a damp cloth and avoid harsh chemicals.</p>
+          <h3>Do you offer custom designs?</h3>
+          <p>Yes! You can inquire about custom orders on our <a href="contact.html" style="color: #4CAF50; text-decoration: none;">Contact Us</a> page.</p>
+          <h3>What payment methods do you accept?</h3>
+          <p>We accept all major credit cards and secure online payments.</p>
+          <h3>How long does shipping take?</h3>
+          <p>Standard shipping takes 3-5 business days. Express options are available. See our <a href="shipping.html" style="color: #4CAF50; text-decoration: none;">Shipping & Returns</a> page for details.</p>
+          <h3>Can I return or exchange my pot?</h3>
+          <p>Yes, we offer a 30-day return window. See our <a href="shipping.html" style="color: #4CAF50; text-decoration: none;">Shipping & Returns</a> page for our full policy.</p>
+          <h3>What if my pot arrives damaged?</h3>
+          <p>Please contact us within 48 hours with photos and we'll arrange a replacement or refund.</p>
+          <h3>Do you ship internationally?</h3>
+          <p>We ship to Canada, the US, and select international locations. See our <a href="shipping.html" style="color: #4CAF50; text-decoration: none;">Shipping & Returns</a> page for more info.</p>
         </div>
       </div>
     </main>
-    <div id="cart-modal" class="modal hidden">
-      <div class="modal-content">
-        <span class="close" id="close-cart">&times;</span>
-        <h2>Your Cart</h2>
-        <div id="cart-items"></div>
-        <div class="cart-total">
-          <span>Total:</span> <span id="cart-total">$0.00</span>
-        </div>
-        <a href="checkout.html" class="checkout-btn">Checkout</a>
-      </div>
-    </div>
     <footer class="site-footer">
       <div>
         pot it like it's hot &mdash; "Let your plants live their best life!"
@@ -97,6 +56,17 @@
         <button id="subscribe-btn" class="checkout-btn" style="margin-top: 1rem;">Subscribe to Email List</button>
       </div>
     </footer>
+    <div id="cart-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close" id="close-cart">&times;</span>
+        <h2>Your Cart</h2>
+        <div id="cart-items"></div>
+        <div class="cart-total">
+          <span>Total:</span> <span id="cart-total">$0.00</span>
+        </div>
+        <a href="checkout.html" class="checkout-btn">Checkout</a>
+      </div>
+    </div>
     <div id="subscribe-modal" class="modal hidden">
       <div class="modal-content" style="max-width: 400px;">
         <span class="close" id="close-subscribe">&times;</span>
@@ -109,7 +79,6 @@
       </div>
     </div>
     <script src="main.js"></script>
-    <script src="contact.js"></script>
     <script src="cart.js"></script>
     <script src="cart-modal.js"></script>
     <script>

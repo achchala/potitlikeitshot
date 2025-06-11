@@ -59,17 +59,38 @@ function renderCheckoutCart() {
     cartItemsDiv.appendChild(row);
   });
 
+  // Calculate shipping
+  const shippingCost = subtotal >= 50 ? 0 : 8.99;
+  const tax = subtotal * 0.15;
+  const total = subtotal + shippingCost + tax;
+
   // Order summary
   summaryDiv.innerHTML = `
     <div>Subtotal: <b>$${subtotal.toFixed(2)}</b></div>
-    <div style="color:#888; font-size:0.97rem;">Est. Taxes: <b>$${(
-      subtotal * 0.15
-    ).toFixed(2)}</b></div>
+    <div>Shipping: <b>$${shippingCost.toFixed(2)}</b> ${subtotal >= 50 ? '(Free shipping!)' : ''}</div>
+    <div style="color:#888; font-size:0.97rem;">Est. Taxes: <b>$${tax.toFixed(2)}</b></div>
     <hr style="margin:1rem 0;">
-    <div style="font-size:1.13rem; font-weight:700;">Estimated Total: $${(
-      subtotal * 1.15
-    ).toFixed(2)}</div>
+    <div style="font-size:1.13rem; font-weight:700;">Estimated Total: $${total.toFixed(2)}</div>
+    <div style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+      <p>Shipping Options:</p>
+      <ul style="list-style: none; padding: 0; margin: 0.5rem 0;">
+        <li>• Standard (3-5 business days): ${subtotal >= 50 ? 'Free' : '$8.99'}</li>
+        <li>• Express (1-2 business days): $15.99</li>
+      </ul>
+    </div>
   `;
+
+  // Add shipping method selection
+  const shippingMethodDiv = document.createElement('div');
+  shippingMethodDiv.className = 'shipping-method';
+  shippingMethodDiv.innerHTML = `
+    <label for="shipping-method">Shipping Method:</label>
+    <select id="shipping-method" onchange="updateShippingMethod(this.value)">
+      <option value="standard">Standard Shipping (3-5 business days)</option>
+      <option value="express">Express Shipping (1-2 business days)</option>
+    </select>
+  `;
+  summaryDiv.appendChild(shippingMethodDiv);
 }
 
 function updateCheckoutItemQuantity(productId, size, newQty) {
@@ -348,4 +369,27 @@ function calculateTotal(order) {
   return order.reduce((total, item) => {
     return total + getProductPrice(item.size) * item.qty;
   }, 0);
+}
+
+// Add shipping method update function
+function updateShippingMethod(method) {
+  const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+  let subtotal = 0;
+  cart.forEach((item) => {
+    const product = products.find((p) => p.id === item.id);
+    if (!product) return;
+    const price = getProductPrice(item.size);
+    subtotal += price * item.qty;
+  });
+
+  const shippingCost = method === 'express' ? 15.99 : (subtotal >= 50 ? 0 : 8.99);
+  const tax = subtotal * 0.15;
+  const total = subtotal + shippingCost + tax;
+
+  const summaryDiv = document.getElementById("checkout-summary-details");
+  const shippingLine = summaryDiv.querySelector('div:nth-child(2)');
+  const totalLine = summaryDiv.querySelector('div:nth-child(5)');
+
+  shippingLine.innerHTML = `Shipping: <b>$${shippingCost.toFixed(2)}</b> ${subtotal >= 50 && method === 'standard' ? '(Free shipping!)' : ''}`;
+  totalLine.innerHTML = `Estimated Total: $${total.toFixed(2)}`;
 }
