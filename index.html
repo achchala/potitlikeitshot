@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pot it like its hot - Plant Pots & Planters</title>
+    <meta
+      name="description"
+      content="Discover beautiful plant pots and planters for your home and garden."
+    />
+    <link rel="stylesheet" href="style.css" />
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-8LZT78243L"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-8LZT78243L");
+    </script>
+  </head>
+  <body>
+    <header>
+      <div class="container header-flex">
+        <h1>Pot it like its hot</h1>
+        <button id="cart-btn" aria-label="View cart">
+          🛒 <span id="cart-count">0</span>
+        </button>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <div class="product-grid" id="product-list">
+          <!-- Products will be injected here by JS -->
+        </div>
+      </div>
+    </main>
+    <div id="cart-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close" id="close-cart">&times;</span>
+        <h2>Your Cart</h2>
+        <div id="cart-items"></div>
+        <div class="cart-total">
+          <span>Total:</span> <span id="cart-total">$0.00</span>
+        </div>
+        <a href="checkout.html" class="checkout-btn">Checkout</a>
+      </div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
