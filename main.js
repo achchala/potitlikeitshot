@@ -8,6 +8,7 @@ const products = [
     tags: ["fun", "blue", "character"],
     sizes: ["Small", "Medium", "Large"],
     inStock: true,
+    rating: (Math.random() * 2 + 3).toFixed(1), // Random rating between 3.0 and 5.0
   },
   {
     id: "shy-guy",
@@ -17,6 +18,7 @@ const products = [
     tags: ["shy", "red", "character"],
     sizes: ["Small", "Medium"],
     inStock: true,
+    rating: (Math.random() * 2 + 3).toFixed(1),
   },
   {
     id: "aquamarine",
@@ -26,6 +28,7 @@ const products = [
     tags: ["blue", "aqua", "modern"],
     sizes: ["Medium", "Large"],
     inStock: false,
+    rating: (Math.random() * 2 + 3).toFixed(1),
   },
   {
     id: "picnic-in-the-park",
@@ -35,6 +38,7 @@ const products = [
     tags: ["picnic", "yellow", "outdoor"],
     sizes: ["Small", "Large"],
     inStock: true,
+    rating: (Math.random() * 2 + 3).toFixed(1),
   },
   {
     id: "flower-power",
@@ -44,6 +48,7 @@ const products = [
     tags: ["flower", "groovy", "colorful"],
     sizes: ["Small", "Medium", "Large"],
     inStock: true,
+    rating: (Math.random() * 2 + 3).toFixed(1),
   },
   {
     id: "garden-party",
@@ -53,6 +58,7 @@ const products = [
     tags: ["garden", "party", "green"],
     sizes: ["Medium", "Large"],
     inStock: false,
+    rating: (Math.random() * 2 + 3).toFixed(1),
   },
   {
     id: "intergalactic",
@@ -62,6 +68,7 @@ const products = [
     tags: ["space", "galaxy", "purple"],
     sizes: ["Small", "Medium"],
     inStock: true,
+    rating: (Math.random() * 2 + 3).toFixed(1),
   },
   {
     id: "lovestruck",
@@ -71,6 +78,7 @@ const products = [
     tags: ["love", "pink", "heart"],
     sizes: ["Small", "Medium", "Large"],
     inStock: true,
+    rating: (Math.random() * 2 + 3).toFixed(1),
   },
   {
     id: "moon-river",
@@ -80,6 +88,7 @@ const products = [
     tags: ["moon", "river", "blue"],
     sizes: ["Large"],
     inStock: true,
+    rating: (Math.random() * 2 + 3).toFixed(1),
   },
   {
     id: "spidey-senses",
@@ -89,6 +98,7 @@ const products = [
     tags: ["spider", "red", "fun"],
     sizes: ["Small", "Medium"],
     inStock: true,
+    rating: (Math.random() * 2 + 3).toFixed(1),
   },
   {
     id: "funny-bunny",
@@ -98,6 +108,7 @@ const products = [
     tags: ["bunny", "spring", "cute"],
     sizes: ["Small", "Medium", "Large"],
     inStock: true,
+    rating: (Math.random() * 2 + 3).toFixed(1),
   },
   {
     id: "rainbow-sherbet",
@@ -107,6 +118,7 @@ const products = [
     tags: ["rainbow", "colorful", "sweet"],
     sizes: ["Small", "Medium"],
     inStock: true,
+    rating: (Math.random() * 2 + 3).toFixed(1),
   },
   {
     id: "secret-garden",
@@ -116,6 +128,7 @@ const products = [
     tags: ["secret", "garden", "mystery"],
     sizes: ["Medium", "Large"],
     inStock: true,
+    rating: (Math.random() * 2 + 3).toFixed(1),
   },
   {
     id: "ocean-eyes",
@@ -125,6 +138,7 @@ const products = [
     tags: ["ocean", "blue", "calm"],
     sizes: ["Small", "Large"],
     inStock: true,
+    rating: (Math.random() * 2 + 3).toFixed(1),
   },
   {
     id: "under-the-sea",
@@ -134,6 +148,7 @@ const products = [
     tags: ["sea", "aqua", "marine"],
     sizes: ["Small", "Medium", "Large"],
     inStock: true,
+    rating: (Math.random() * 2 + 3).toFixed(1),
   },
   {
     id: "queen-of-hearts",
@@ -143,6 +158,7 @@ const products = [
     tags: ["queen", "hearts", "red"],
     sizes: ["Medium", "Large"],
     inStock: true,
+    rating: (Math.random() * 2 + 3).toFixed(1),
   },
   {
     id: "violet-visions",
@@ -152,6 +168,7 @@ const products = [
     tags: ["violet", "purple", "dreamy"],
     sizes: ["Small", "Medium"],
     inStock: true,
+    rating: (Math.random() * 2 + 3).toFixed(1),
   },
 ].map((p) => ({ ...p, sizes: ["Small", "Medium", "Large"] }));
 
@@ -166,7 +183,7 @@ let selectedProduct = null;
 let selectedSize = null;
 let searchTerm = "";
 let selectedTag = "";
-let sortDirection = 1; // 1: ascending, -1: descending
+let sortBy = "name-asc"; // Default sort
 
 // Get all unique tags
 const allTags = [...new Set(products.flatMap((p) => p.tags))].sort();
@@ -187,6 +204,18 @@ function getProductPrice(size) {
   if (size === "Medium") return 20;
   if (size === "Large") return 30;
   return 0;
+}
+
+function generateStarRating(rating) {
+  const fullStars = Math.round(rating);
+  const emptyStars = 5 - fullStars;
+  
+  return `
+    <div class="star-rating">
+      ${'★'.repeat(fullStars)}${'☆'.repeat(emptyStars)}
+      <span class="rating-number">${rating}</span>
+    </div>
+  `;
 }
 
 function renderProducts() {
@@ -218,11 +247,15 @@ function renderProducts() {
     return true;
   });
 
-  // Sort by name (always sorted)
+  // Sort products
   filtered.sort((a, b) => {
-    const nameA = a.name.toLowerCase();
-    const nameB = b.name.toLowerCase();
-    return sortDirection * nameA.localeCompare(nameB);
+    if (sortBy === "name-asc") {
+      return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+    } else if (sortBy === "name-desc") {
+      return b.name.toLowerCase().localeCompare(a.name.toLowerCase());
+    } else if (sortBy === "rating-desc") {
+      return parseFloat(b.rating) - parseFloat(a.rating);
+    }
   });
 
   if (filtered.length === 0) {
@@ -247,6 +280,7 @@ function renderProducts() {
         }
       </div>
       <div class="product-name">${product.name}</div>
+      ${generateStarRating(product.rating)}
       <div class="product-card-price-row" style="display:none;text-align:center;font-weight:600;color:var(--primary-dark);margin-top:0.2rem;margin-bottom:0.1rem;font-size:1.08rem;"></div>
       <div class="product-card-sizes">
         ${product.sizes
@@ -269,12 +303,25 @@ function renderProducts() {
     let selectedCardSize = product.sizes[0];
     const priceRow = card.querySelector(".product-card-price-row");
     priceRow.style.display = "block";
+    const productImg = card.querySelector(".product-img");
 
     const updateCardPrice = () => {
       priceRow.textContent = `$${getProductPrice(selectedCardSize)}`;
       card.querySelectorAll(".size-btn").forEach((btn) => {
         btn.classList.toggle("selected", btn.dataset.size === selectedCardSize);
       });
+      
+      // Update image size based on selected size
+      if (selectedCardSize === "Medium") {
+        productImg.style.transform = "scale(1.2)";
+        productImg.style.transition = "transform 0.3s ease";
+      } else if (selectedCardSize === "Large") {
+        productImg.style.transform = "scale(1.4)";
+        productImg.style.transition = "transform 0.3s ease";
+      } else {
+        productImg.style.transform = "scale(1)";
+        productImg.style.transition = "transform 0.3s ease";
+      }
     };
 
     card.querySelectorAll(".size-btn").forEach((btn) => {
@@ -322,11 +369,25 @@ function openProductModal(productId) {
   const cart = getCart();
   const cartItem = cart.find((i) => i.id === productId);
   selectedSize = cartItem ? cartItem.size : product.sizes[0];
-  document.getElementById("modal-product-image").src = product.image;
-  document.getElementById("modal-product-image").alt = product.name;
+  const modalImage = document.getElementById("modal-product-image");
+  modalImage.src = product.image;
+  modalImage.alt = product.name;
+  
+  // Set initial image size based on selected size
+  if (selectedSize === "Medium") {
+    modalImage.style.transform = "scale(1.2)";
+  } else if (selectedSize === "Large") {
+    modalImage.style.transform = "scale(1.4)";
+  } else {
+    modalImage.style.transform = "scale(1)";
+  }
+  modalImage.style.transition = "transform 0.3s ease";
+  
   document.getElementById("modal-product-name").textContent = product.name;
   document.getElementById("modal-product-description").textContent =
     product.description;
+  // Add rating display
+  document.getElementById("modal-product-rating").innerHTML = generateStarRating(product.rating);
   // Price above sizes
   document.getElementById(
     "modal-product-price"
@@ -359,6 +420,15 @@ function openProductModal(productId) {
       sizesDiv.querySelectorAll(".size-btn").forEach((btn) => {
         btn.classList.toggle("selected", btn.textContent === size[0]);
       });
+      
+      // Update image size
+      if (size === "Medium") {
+        modalImage.style.transform = "scale(1.2)";
+      } else if (size === "Large") {
+        modalImage.style.transform = "scale(1.4)";
+      } else {
+        modalImage.style.transform = "scale(1)";
+      }
     };
     sizesDiv.appendChild(sizeBtn);
   });
@@ -557,17 +627,11 @@ window.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Sort button
-  const sortBtn = document.getElementById("sort-btn");
-  if (sortBtn) {
-    // Set initial sort icon
-    const sortIcon = document.getElementById("sort-icon");
-    sortIcon.textContent = "↑";
-
-    sortBtn.addEventListener("click", function () {
-      sortDirection = -sortDirection; // Toggle between 1 and -1
-      const sortIcon = document.getElementById("sort-icon");
-      sortIcon.textContent = sortDirection === 1 ? "↑" : "↓";
+  // Sort filter
+  const sortFilter = document.getElementById("sort-filter");
+  if (sortFilter) {
+    sortFilter.addEventListener("change", function (e) {
+      sortBy = e.target.value;
       renderProducts();
     });
   }
