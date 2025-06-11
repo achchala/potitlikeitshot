@@ -93,8 +93,8 @@
           >
             <option value="">All Tags</option>
           </select>
-          <button
-            id="sort-btn"
+          <select
+            id="sort-filter"
             style="
               padding: 0.7rem 1rem;
               font-size: 1.1rem;
@@ -102,13 +102,12 @@
               border: 1.5px solid #e0e0e0;
               background: white;
               cursor: pointer;
-              display: flex;
-              align-items: center;
-              gap: 0.3rem;
             "
           >
-            Sort by Name <span id="sort-icon">↕</span>
-          </button>
+            <option value="name-asc">Name (A-Z)</option>
+            <option value="name-desc">Name (Z-A)</option>
+            <option value="rating-desc">Top Rated</option>
+          </select>
         </div>
         <div class="product-grid" id="product-list">
           <!-- Products will be injected here by JS -->
@@ -140,7 +139,8 @@
         <h2 id="modal-product-name"></h2>
         <div id="modal-product-tags" class="modal-tags"></div>
         <div id="modal-product-sizes" class="modal-sizes"></div>
-        <p id="modal-product-description"></p>
+        <div id="modal-product-description"></div>
+        <div id="modal-product-rating"></div>
         <div class="modal-product-footer">
           <span class="price" id="modal-product-price"></span>
           <button id="modal-add-to-cart" class="checkout-btn">
