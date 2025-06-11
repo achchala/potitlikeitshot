@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pot it like its hot - Plant Pots & Planters</title>
+    <title>pot it like its hot - Plant Pots & Planters</title>
     <meta
       name="description"
       content="Discover beautiful plant pots and planters for your home and garden."
@@ -48,6 +48,29 @@
           <span>Total:</span> <span id="cart-total">$0.00</span>
         </div>
         <a href="checkout.html" class="checkout-btn">Checkout</a>
+      </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="modal hidden">
+      <div class="modal-content product-modal-content">
+        <span class="close" id="close-product-modal">&times;</span>
+        <img
+          id="modal-product-image"
+          src=""
+          alt=""
+          class="modal-product-image"
+        />
+        <h2 id="modal-product-name"></h2>
+        <div id="modal-product-tags" class="modal-tags"></div>
+        <div id="modal-product-sizes" class="modal-sizes"></div>
+        <p id="modal-product-description"></p>
+        <div class="modal-product-footer">
+          <span class="price" id="modal-product-price"></span>
+          <button id="modal-add-to-cart" class="checkout-btn">
+            Add to Cart
+          </button>
+        </div>
       </div>
     </div>
     <script src="main.js"></script>
