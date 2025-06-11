@@ -50,42 +50,54 @@ h1 {
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 2.5rem;
   margin-top: 2.5rem;
 }
 
 .product-card {
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  background: none;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: box-shadow 0.2s, transform 0.2s;
-  border: 1px solid var(--border);
-  min-height: 370px;
   position: relative;
 }
-.product-card:hover {
-  box-shadow: 0 8px 32px rgba(45, 122, 45, 0.1);
-  transform: translateY(-4px) scale(1.03);
+.product-image-container {
+  position: relative;
+  max-width: 320px;
+  min-width: 200px;
+  width: 100%;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  overflow: visible;
+  background: transparent;
+  box-shadow: none;
 }
-.product-card img {
-  width: 140px;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 1.2rem;
-  background: #eee;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+.product-img {
+  width: 90%;
+  height: 90%;
+  max-width: 320px;
+  max-height: 320px;
+  object-fit: contain;
+  display: block;
+  background: transparent;
+  margin: 0 auto;
 }
-.product-card h3 {
-  margin: 0.5rem 0 0.25rem 0;
-  font-size: 1.2rem;
+.product-name {
+  margin-top: 0.7rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: #222;
+  text-align: center;
+  letter-spacing: -0.5px;
 }
 .product-card p {
   font-size: 1rem;
@@ -370,14 +382,14 @@ h1 {
 
 .add-btn {
   position: absolute;
-  top: 18px;
-  right: 18px;
+  bottom: 14px;
+  right: 14px;
   background: var(--primary);
   color: #fff;
   border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  border-radius: 8px;
+  width: 38px;
+  height: 38px;
   font-size: 1.5rem;
   font-weight: 700;
   cursor: pointer;

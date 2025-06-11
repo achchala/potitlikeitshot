@@ -1,144 +1,140 @@
 // Sample products
 const products = [
   {
-    id: "3",
-    name: "Classic Pot",
-    image: "images/3.png",
-    description:
-      "A beautiful classic pot for your plants. Made from high-quality ceramic, perfect for indoor and outdoor use.",
-    tags: ["ceramic", "indoor", "classic"],
+    id: "cookie-monster",
+    name: "cookie monster",
+    image: "images/cookie monster.png",
+    description: "A playful blue pot for your favorite plant.",
+    tags: ["fun", "blue", "character"],
     sizes: ["Small", "Medium", "Large"],
   },
   {
-    id: "4",
-    name: "Modern Planter",
-    image: "images/4.png",
-    description:
-      "Contemporary design for modern homes. Lightweight and durable.",
-    tags: ["modern", "lightweight", "indoor"],
-    sizes: ["Medium", "Large"],
-  },
-  {
-    id: "5",
-    name: "Minimalist Vase",
-    image: "images/5.png",
-    description:
-      "Minimalist vase for a modern look. Perfect for single stems or small bouquets.",
-    tags: ["minimalist", "vase", "decor"],
-    sizes: ["One Size"],
-  },
-  {
-    id: "6",
-    name: "Hanging Planter",
-    image: "images/6.png",
-    description:
-      "Perfect for hanging plants indoors or outdoors. Includes rope for easy hanging.",
-    tags: ["hanging", "outdoor", "rope"],
+    id: "shy-guy",
+    name: "shy guy",
+    image: "images/shy guy.png",
+    description: "A bashful pot for a subtle statement.",
+    tags: ["shy", "red", "character"],
     sizes: ["Small", "Medium"],
   },
   {
-    id: "7",
-    name: "Geometric Pot",
-    image: "images/7.png",
-    description: "Geometric design for a modern touch.",
-    tags: ["geometric", "modern", "decor"],
+    id: "aquamarine",
+    name: "aquamarine",
+    image: "images/aquamarine.png",
+    description: "Cool tones for a calming vibe.",
+    tags: ["blue", "aqua", "modern"],
+    sizes: ["Medium", "Large"],
+  },
+  {
+    id: "picnic-in-the-park",
+    name: "picnic in the park",
+    image: "images/picnic in the park.png",
+    description: "Perfect for a sunny windowsill.",
+    tags: ["picnic", "yellow", "outdoor"],
+    sizes: ["Small", "Large"],
+  },
+  {
+    id: "flower-power",
+    name: "flower power",
+    image: "images/flower power.png",
+    description: "Groovy floral vibes.",
+    tags: ["flower", "groovy", "colorful"],
     sizes: ["Small", "Medium", "Large"],
   },
   {
-    id: "8",
-    name: "Rustic Pot",
-    image: "images/8.png",
-    description: "Rustic charm for your garden.",
-    tags: ["rustic", "outdoor", "garden"],
+    id: "garden-party",
+    name: "garden party",
+    image: "images/garden party.png",
+    description: "For your next plant soirée.",
+    tags: ["garden", "party", "green"],
     sizes: ["Medium", "Large"],
   },
   {
-    id: "9",
-    name: "Patterned Planter",
-    image: "images/9.png",
-    description: "Patterned for a unique look.",
-    tags: ["patterned", "unique", "indoor"],
+    id: "intergalactic",
+    name: "intergalactic",
+    image: "images/intergalactic.png",
+    description: "Out of this world style.",
+    tags: ["space", "galaxy", "purple"],
     sizes: ["Small", "Medium"],
   },
   {
-    id: "10",
-    name: "Large Floor Pot",
-    image: "images/10.png",
-    description: "Perfect for large plants.",
-    tags: ["large", "floor", "statement"],
+    id: "lovestruck",
+    name: "lovestruck",
+    image: "images/lovestruck.png",
+    description: "For the plant you love most.",
+    tags: ["love", "pink", "heart"],
+    sizes: ["Small", "Medium", "Large"],
+  },
+  {
+    id: "moon-river",
+    name: "moon river",
+    image: "images/moon river.png",
+    description: "Dreamy and serene.",
+    tags: ["moon", "river", "blue"],
     sizes: ["Large"],
   },
   {
-    id: "11",
-    name: "Textured Pot",
-    image: "images/11.png",
-    description: "Textured finish for added style.",
-    tags: ["textured", "style", "decor"],
+    id: "spidey-senses",
+    name: "spidey senses",
+    image: "images/spidey senses.png",
+    description: "A web of style for your shelf.",
+    tags: ["spider", "red", "fun"],
     sizes: ["Small", "Medium"],
   },
   {
-    id: "12",
-    name: "Oval Planter",
-    image: "images/12.png",
-    description: "Oval shape for a modern look.",
-    tags: ["oval", "modern", "indoor"],
-    sizes: ["Medium", "Large"],
-  },
-  {
-    id: "13",
-    name: "Colorful Pot",
-    image: "images/13.png",
-    description: "Brighten up your space.",
-    tags: ["colorful", "bright", "decor"],
-    sizes: ["Small", "Medium"],
-  },
-  {
-    id: "14",
-    name: "Classic White Pot",
-    image: "images/14.png",
-    description: "Classic white for any decor.",
-    tags: ["classic", "white", "indoor"],
+    id: "funny-bunny",
+    name: "funny bunny",
+    image: "images/funny bunny.png",
+    description: "Hop into spring with this pot.",
+    tags: ["bunny", "spring", "cute"],
     sizes: ["Small", "Medium", "Large"],
   },
   {
-    id: "15",
-    name: "Tiny Succulent Pot",
-    image: "images/15.png",
-    description: "Perfect for succulents.",
-    tags: ["succulent", "tiny", "indoor"],
-    sizes: ["Tiny"],
-  },
-  {
-    id: "16",
-    name: "Woven Basket Pot",
-    image: "images/16.png",
-    description: "Woven basket style.",
-    tags: ["woven", "basket", "boho"],
+    id: "rainbow-sherbet",
+    name: "rainbow sherbet",
+    image: "images/rainbow sherbet.png",
+    description: "A swirl of color for your plant.",
+    tags: ["rainbow", "colorful", "sweet"],
     sizes: ["Small", "Medium"],
   },
   {
-    id: "17",
-    name: "Tall Planter",
-    image: "images/17.png",
-    description: "Tall for statement plants.",
-    tags: ["tall", "statement", "modern"],
-    sizes: ["Large"],
-  },
-  {
-    id: "18",
-    name: "Speckled Pot",
-    image: "images/18.png",
-    description: "Speckled finish for a unique look.",
-    tags: ["speckled", "unique", "decor"],
-    sizes: ["Small", "Medium"],
-  },
-  {
-    id: "19",
-    name: "Boho Pot",
-    image: "images/19.png",
-    description: "Boho style for a relaxed vibe.",
-    tags: ["boho", "relaxed", "indoor"],
+    id: "secret-garden",
+    name: "secret garden",
+    image: "images/secret garden.png",
+    description: "A magical home for your plant.",
+    tags: ["secret", "garden", "mystery"],
     sizes: ["Medium", "Large"],
+  },
+  {
+    id: "ocean-eyes",
+    name: "ocean eyes",
+    image: "images/ocean eyes.png",
+    description: "Deep blue for ocean lovers.",
+    tags: ["ocean", "blue", "calm"],
+    sizes: ["Small", "Large"],
+  },
+  {
+    id: "under-the-sea",
+    name: "under the sea",
+    image: "images/under the sea.png",
+    description: "Dive into style.",
+    tags: ["sea", "aqua", "marine"],
+    sizes: ["Small", "Medium", "Large"],
+  },
+  {
+    id: "queen-of-hearts",
+    name: "queen of hearts",
+    image: "images/queen of hearts.png",
+    description: "Rule your plant kingdom.",
+    tags: ["queen", "hearts", "red"],
+    sizes: ["Medium", "Large"],
+  },
+  {
+    id: "violet-visions",
+    name: "violet visions",
+    image: "images/violet visions.png",
+    description: "Purple dreams for your plant.",
+    tags: ["violet", "purple", "dreamy"],
+    sizes: ["Small", "Medium"],
   },
 ];
 
@@ -152,16 +148,19 @@ function renderProducts() {
     const card = document.createElement("div");
     card.className = "product-card";
     card.innerHTML = `
-      <img src="${product.image}" alt="${product.name}">
-      <h3>${product.name}</h3>
-      <button class="add-btn" data-id="${product.id}" title="Add to Cart">+</button>
+      <div class="product-image-container">
+        <img src="${product.image}" alt="${product.name}" class="product-img" />
+        <button class="add-btn" data-id="${product.id}" title="Add to Cart">+</button>
+      </div>
+      <div class="product-name">${product.name}</div>
     `;
     card.querySelector(".add-btn").onclick = (e) => {
       e.stopPropagation();
       addToCart(product.id, product.sizes[0]);
       showAddToCartFeedbackModal(product.name, product.sizes[0]);
     };
-    card.onclick = () => openProductModal(product.id);
+    card.querySelector(".product-image-container").onclick = () =>
+      openProductModal(product.id);
     list.appendChild(card);
   });
 }
