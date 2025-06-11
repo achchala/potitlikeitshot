@@ -1241,3 +1241,134 @@ h1 {
     max-height: 220px;
   }
 }
+
+@media (max-width: 600px) {
+  /* Header: stack and center */
+  header {
+    padding: 0.3rem 0;
+  }
+  .header-flex {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .header-left,
+  .header-right {
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.7rem;
+    width: 100%;
+  }
+  .site-title-link h1 {
+    font-size: 1.4rem;
+    margin: 0.3rem 0;
+  }
+  .pot-logo {
+    height: 36px;
+    margin-right: 0.7rem;
+  }
+  .about-link,
+  #cart-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+  }
+
+  /* Product grid/cards */
+  .product-grid {
+    gap: 1.1rem;
+    margin-top: 1.2rem;
+  }
+  .product-card {
+    padding: 0.7rem 0.3rem 0.7rem 0.3rem;
+    min-height: 220px;
+  }
+  .product-image-container {
+    max-width: 180px;
+    min-width: 120px;
+    border-radius: 12px;
+  }
+  .product-img {
+    border-radius: 12px;
+  }
+  .size-btn {
+    min-width: 38px;
+    min-height: 38px;
+    font-size: 1rem;
+    padding: 0.18rem 0.7rem;
+  }
+  .product-card .add-btn,
+  .add-btn {
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 1.1rem;
+    padding: 0.5rem 0;
+  }
+
+  /* Modal improvements */
+  .modal-content,
+  .checkout-container {
+    padding: 1rem 0.3rem;
+    min-width: 98vw;
+    max-width: 98vw;
+  }
+  .close {
+    font-size: 2.2rem;
+    top: 0.7rem;
+    right: 0.7rem;
+  }
+  .feedback-modal {
+    min-width: 90vw;
+    max-width: 98vw;
+    padding: 0.2rem 0.5rem;
+  }
+
+  /* Cart modal: sticky checkout button */
+  .modal-content .checkout-btn {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    margin-top: 1.2rem;
+    font-size: 1.1rem;
+    padding: 1rem 0;
+    z-index: 10;
+  }
+
+  /* Footer */
+  .site-footer {
+    padding: 0.7rem 0 0.7rem 0;
+    font-size: 0.98rem;
+    margin-top: 1.2rem;
+  }
+
+  /* General font/spacing */
+  body,
+  input,
+  button,
+  select {
+    font-size: 16px !important;
+  }
+  .container > div,
+  .checkout-flex {
+    gap: 0.7rem !important;
+  }
+  .form-row {
+    gap: 0.7rem;
+  }
+  .checkout-form input {
+    font-size: 16px;
+    width: 100%;
+    min-width: 0;
+  }
+  .carousel-container {
+    max-width: 99vw;
+    padding: 0.7rem 0.1rem 0.7rem 0.1rem;
+  }
+  .carousel-images {
+    width: 98vw;
+    max-width: 99vw;
+    height: 38vw;
+    min-height: 100px;
+    max-height: 180px;
+  }
+}
