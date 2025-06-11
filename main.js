@@ -140,11 +140,28 @@ const products = [
 
 let selectedProduct = null;
 let selectedSize = null;
+let searchTerm = "";
 
 function renderProducts() {
   const list = document.getElementById("product-list");
   list.innerHTML = "";
-  products.forEach((product) => {
+  // Filter products by search term
+  const filtered = products.filter((product) => {
+    if (!searchTerm) return true;
+    const term = searchTerm.toLowerCase();
+    return (
+      product.name.toLowerCase().includes(term) ||
+      product.description.toLowerCase().includes(term) ||
+      (product.tags &&
+        product.tags.some((tag) => tag.toLowerCase().includes(term)))
+    );
+  });
+  if (filtered.length === 0) {
+    list.innerHTML =
+      '<div style="grid-column: 1/-1; text-align: center; color: #888; font-size: 1.2rem; margin-top: 2rem;">No pots found.</div>';
+    return;
+  }
+  filtered.forEach((product) => {
     const card = document.createElement("div");
     card.className = "product-card";
     card.innerHTML = `
@@ -313,6 +330,17 @@ window.onclick = function (event) {
     productModal.classList.add("hidden");
   }
 };
+
+// Listen for search input
+window.addEventListener("DOMContentLoaded", function () {
+  const searchBar = document.getElementById("search-bar");
+  if (searchBar) {
+    searchBar.addEventListener("input", function (e) {
+      searchTerm = e.target.value;
+      renderProducts();
+    });
+  }
+});
 
 // Initial render
 renderProducts();
