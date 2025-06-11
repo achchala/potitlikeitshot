@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About - Pot it like its hot</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container header-flex">
+        <div class="header-left">
+          <a href="index.html" class="logo-link"
+            ><img src="images/potlogo.png" alt="Pot Logo" class="pot-logo"
+          /></a>
+          <a href="index.html" class="site-title-link"
+            ><h1>pot it like its hot</h1></a
+          >
+        </div>
+        <div class="header-right">
+          <a href="index.html" class="back-link">&larr; Back to shop</a>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div
+        class="container"
+        style="
+          max-width: 600px;
+          margin: 2.5rem auto 2rem auto;
+          text-align: center;
+        "
+      >
+        <h2>About Us</h2>
+        <p style="font-size: 1.15rem; margin: 1.5rem 0">
+          Welcome to <b>pot it like its hot</b>!<br />
+          We believe every plant deserves a home as unique as it is. Our pots
+          are designed to bring joy, color, and a little bit of fun to your
+          space. Whether you're a seasoned plant parent or just starting out,
+          we're here to help your plants live their best life!
+        </p>
+        <img
+          src="images/potlogo.png"
+          alt="Pot Logo"
+          style="height: 80px; margin: 1.5rem auto; display: block"
+        />
+        <p style="color: #e75480; font-weight: 600">
+          Let your plants live their best life!
+        </p>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div>
+        pot it like its hot &mdash; "Let your plants live their best life!"
+      </div>
+    </footer>
+    <div id="cart-modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close" id="close-cart">&times;</span>
+        <h2>Your Cart</h2>
+        <div id="cart-items"></div>
+        <div class="cart-total">
+          <span>Total:</span> <span id="cart-total">$0.00</span>
+        </div>
+        <a href="checkout.html" class="checkout-btn">Checkout</a>
+      </div>
+    </div>
+    <script src="main.js"></script>
+    <script>
+      // Update cart count badge on about page
+      function getCart() {
+        try {
+          return JSON.parse(localStorage.getItem("cart") || "[]");
+        } catch (e) {
+          return [];
+        }
+      }
+      function updateCartCount() {
+        var cart = getCart();
+        var count = cart.reduce(function (sum, item) {
+          return sum + (item.qty || 0);
+        }, 0);
+        var badge = document.getElementById("cart-count");
+        if (badge) badge.textContent = count;
+      }
+      updateCartCount();
+    </script>
+  </body>
+</html>

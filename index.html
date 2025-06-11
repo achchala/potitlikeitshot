@@ -8,6 +8,7 @@
       name="description"
       content="Discover beautiful plant pots and planters for your home and garden."
     />
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
     <link rel="stylesheet" href="style.css" />
     <!-- Google tag (gtag.js) -->
     <script
@@ -26,10 +27,20 @@
   <body>
     <header>
       <div class="container header-flex">
-        <h1>pot it like its hot</h1>
-        <button id="cart-btn" aria-label="View cart">
-          🛒 <span id="cart-count">0</span>
-        </button>
+        <div class="header-left">
+          <a href="index.html" class="logo-link"
+            ><img src="images/potlogo.png" alt="Pot Logo" class="pot-logo"
+          /></a>
+          <a href="index.html" class="site-title-link"
+            ><h1>pot it like its hot</h1></a
+          >
+        </div>
+        <div class="header-right">
+          <a href="about.html" class="about-link">ℹ️</a>
+          <button id="cart-btn" aria-label="View cart">
+            🛒 <span id="cart-count" class="cart-badge">0</span>
+          </button>
+        </div>
       </div>
     </header>
     <main>
@@ -45,22 +56,59 @@
             margin: 1.2rem auto 0.7rem auto;
           "
         />
-        <input
-          type="text"
-          id="search-bar"
-          placeholder="Search pots..."
+        <div
           style="
-            width: 100%;
-            max-width: 400px;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
             margin: 1.5rem auto 0.5rem auto;
-            display: block;
-            padding: 0.7rem 1rem;
-            font-size: 1.1rem;
-            border-radius: 8px;
-            border: 1.5px solid #e0e0e0;
-            box-sizing: border-box;
+            max-width: 400px;
           "
-        />
+        >
+          <input
+            type="text"
+            id="search-bar"
+            placeholder="Search pots..."
+            style="
+              flex: 1;
+              padding: 0.7rem 1rem;
+              font-size: 1.1rem;
+              border-radius: 8px;
+              border: 1.5px solid #e0e0e0;
+              box-sizing: border-box;
+            "
+          />
+          <select
+            id="tag-filter"
+            style="
+              padding: 0.7rem 1rem;
+              font-size: 1.1rem;
+              border-radius: 8px;
+              border: 1.5px solid #e0e0e0;
+              background: white;
+              cursor: pointer;
+            "
+          >
+            <option value="">All Tags</option>
+          </select>
+          <button
+            id="sort-btn"
+            style="
+              padding: 0.7rem 1rem;
+              font-size: 1.1rem;
+              border-radius: 8px;
+              border: 1.5px solid #e0e0e0;
+              background: white;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              gap: 0.3rem;
+            "
+          >
+            Sort by Name <span id="sort-icon">↕</span>
+          </button>
+        </div>
         <div class="product-grid" id="product-list">
           <!-- Products will be injected here by JS -->
         </div>
@@ -100,6 +148,11 @@
         </div>
       </div>
     </div>
+    <footer class="site-footer">
+      <div>
+        pot it like its hot &mdash; "Let your plants live their best life!"
+      </div>
+    </footer>
     <script src="main.js"></script>
   </body>
 </html>
