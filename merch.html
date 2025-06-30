@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merch | Pot It Like It's Hot</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="images/favicon.ico" />
+</head>
+<body>
+  <header>
+    <div class="container header-flex">
+      <div class="header-left">
+        <a href="index.html" class="logo-link"><img src="images/potlogo.png" alt="Pot Logo" class="pot-logo" /></a>
+        <a href="index.html" class="site-title-link"><h1>pot it like it's hot</h1></a>
+      </div>
+      <div class="header-right">
+        <a href="about.html" style="margin-left: 1rem; font-weight: 600; text-decoration: none; font-size: 1.1rem; background: #e63975; border-radius: 999px; padding: 0.6rem 1.2rem; display: inline-block; color: white; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); transition: all 0.2s ease-in-out;" onmouseover="this.style.transform='scale(1.05)'; this.style.background='#c51f5d';" onmouseout="this.style.transform='scale(1)'; this.style.background='#e63975';">About</a>
+        <a href="contact.html" style="margin-left: 1rem; font-weight: 600; text-decoration: none; font-size: 1.1rem; background: #e63975; border-radius: 999px; padding: 0.6rem 1.2rem; display: inline-block; color: white; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); transition: all 0.2s ease-in-out;" onmouseover="this.style.transform='scale(1.05)'; this.style.background='#c51f5d';" onmouseout="this.style.transform='scale(1)'; this.style.background='#e63975';">Contact</a>
+        <a href="merch.html" style="margin-left: 1rem; font-weight: 600; text-decoration: none; font-size: 1.1rem; background: #e63975; border-radius: 999px; padding: 0.6rem 1.2rem; display: inline-block; color: white; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); transition: all 0.2s ease-in-out;" onmouseover="this.style.transform='scale(1.05)'; this.style.background='#c51f5d';" onmouseout="this.style.transform='scale(1)'; this.style.background='#e63975';">Merch</a>
+        <a href="checkout.html" aria-label="View cart" style="margin-left: 1rem; font-weight: 600; font-size: 1.1rem; background: #e63975; border-radius: 999px; padding: 0.6rem 1.2rem; display: inline-flex; align-items: center; justify-content: center; border: none; color: white; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); cursor: pointer; position: relative; transition: all 0.2s ease-in-out;" onmouseover="this.style.transform='scale(1.05)'; this.style.background='#c51f5d';" onmouseout="this.style.transform='scale(1)'; this.style.background='#e63975';">Cart <span class="cart-badge" style="position: absolute; top: -8px; right: -8px; background-color: white; color: #e63975; border-radius: 50%; padding: 2px 6px; font-size: 0.75rem; font-weight: bold; box-shadow: 0 1px 3px rgba(0,0,0,0.2);"></span></a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="container" style="max-width: 1100px; margin: 2.5rem auto;">
+      <h2 style="text-align:center; margin-bottom:2.5rem;">Pot It Like It's Hot Merch</h2>
+      <div class="product-grid" id="merch-list">
+        <!-- Merch items will be injected here by JS -->
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div>
+      pot it like it's hot &mdash; "Let your plants live their best life!"
+      <div style="margin-top: 0.5rem; font-size: 0.9rem;">
+        <a href="shipping.html" style="color: inherit; text-decoration: none;">Shipping & Returns</a> |
+        <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy Policy</a> |
+        <a href="questions.html" style="color: inherit; text-decoration: none;">Questions</a>
+      </div>
+    </div>
+  </footer>
+  <script src="cart.js"></script>
+  <script src="merch-data.js"></script>
+  <script>
+    // Render merch items
+    function renderMerch() {
+      const list = document.getElementById('merch-list');
+      list.innerHTML = merchItems.map(item => `
+        <div class="product-card">
+          <div class="product-image-container">
+            <img src="${item.image}" alt="${item.name}" class="product-img" style="background:#fff;" />
+          </div>
+          <div class="product-name">${item.name}</div>
+          <div style="font-size:0.98rem; color:#666; margin-bottom:0.7rem; min-height:48px;">${item.details}</div>
+          <div class="product-card-price-row" style="margin-bottom:0.7rem; font-size:1.13rem; color:#e63975; font-weight:700;">$${item.price.toFixed(2)}</div>
+          <button class="add-btn" onclick="addMerchToCart('${item.id}')">Add to Cart</button>
+        </div>
+      `).join('');
+    }
+
+    // Add merch item to cart
+    function addMerchToCart(id) {
+      const item = merchItems.find(m => m.id === id);
+      if (!item) return;
+      // Use the same cart structure as other products
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const cartItem = cart.find(i => i.id === id && i.size === undefined);
+      if (cartItem) {
+        cartItem.qty += 1;
+      } else {
+        cart.push({ id: id, name: item.name, price: item.price, qty: 1 });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      if (typeof updateCartCount === 'function') updateCartCount();
+      // Feedback
+      const btn = document.querySelector(`button[onclick="addMerchToCart('${id}')"]`);
+      if (btn) {
+        btn.textContent = 'Added!';
+        btn.disabled = true;
+        setTimeout(() => {
+          btn.textContent = 'Add to Cart';
+          btn.disabled = false;
+        }, 1200);
+      }
+    }
+
+    renderMerch();
+  </script>
+</body>
+</html> 

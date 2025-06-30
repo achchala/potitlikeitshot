@@ -505,32 +505,32 @@ function renderCart() {
   let total = 0;
   cartItems.innerHTML = cart
     .map((item) => {
-      const product = products.find((p) => p.id === item.id);
+      let product = products.find((p) => p.id === item.id);
+      let isMerch = false;
+      if (!product && typeof merchItems !== 'undefined') {
+        product = merchItems.find((m) => m.id === item.id);
+        isMerch = !!product;
+      }
       if (!product) return "";
-      const price = getProductPrice(item.size);
+      const price = isMerch ? (item.price || product.price) : getProductPrice(item.size);
       total += price * item.qty;
       return `
       <div class="cart-item">
-        <div>
-          <strong>${product.name}</strong>
-          <div style="font-size: 0.9rem; color: #666;">Size: ${item.size} × ${
-        item.qty
-      }</div>
+        <div style="display:flex;align-items:center;gap:0.8rem;">
+          <img src="${product.image}" alt="${product.name}" style="width:48px;height:48px;object-fit:contain;border-radius:8px;background:#fff;">
+          <div>
+            <strong>${product.name}</strong>
+            <div style="font-size: 0.9rem; color: #666;">${isMerch ? '' : 'Size: ' + item.size} × ${item.qty}</div>
+          </div>
         </div>
         <div style="display: flex; align-items: center;">
           <div class="cart-item-quantity">
-            <button class="quantity-btn" data-action="decrease" data-id="${
-              item.id
-            }" data-size="${item.size}">-</button>
+            <button class="quantity-btn" data-action="decrease" data-id="${item.id}" data-size="${item.size}">-</button>
             <span class="quantity">${item.qty}</span>
-            <button class="quantity-btn" data-action="increase" data-id="${
-              item.id
-            }" data-size="${item.size}">+</button>
+            <button class="quantity-btn" data-action="increase" data-id="${item.id}" data-size="${item.size}">+</button>
           </div>
-          <div style="margin: 0 1rem;">$${price * item.qty}</div>
-          <button class="remove-btn" data-id="${item.id}" data-size="${
-        item.size
-      }" title="Remove">&times;</button>
+          <div style="margin: 0 1rem;">$${(price * item.qty).toFixed(2)}</div>
+          <button class="remove-btn" data-id="${item.id}" data-size="${item.size}" title="Remove">&times;</button>
         </div>
       </div>
     `;
@@ -540,7 +540,7 @@ function renderCart() {
   cartTotal.innerHTML = `
     <div class="cart-total">
       <span>Total:</span>
-      <span>$${total}</span>
+      <span>$${total.toFixed(2)}</span>
     </div>
   `;
 

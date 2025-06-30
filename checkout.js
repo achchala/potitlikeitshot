@@ -18,9 +18,15 @@ function renderCheckoutCart() {
     return;
   }
   cart.forEach((item) => {
-    const product = products.find((p) => p.id === item.id);
+    let product = products.find((p) => p.id === item.id);
+    let isMerch = false;
+    if (!product && typeof merchItems !== 'undefined') {
+      product = merchItems.find((m) => m.id === item.id);
+      isMerch = !!product;
+    }
     if (!product) return;
-    const price = getProductPrice(item.size);
+    // For merch, use item.price or product.price; for pots, use getProductPrice(item.size)
+    const price = isMerch ? (item.price || product.price) : getProductPrice(item.size);
     subtotal += price * item.qty;
     const row = document.createElement("div");
     row.className = "checkout-item-row";
@@ -28,7 +34,7 @@ function renderCheckoutCart() {
       <img src="${product.image}" class="checkout-item-img" alt="${product.name}">
       <div class="checkout-item-details">
         <div class="checkout-item-title">${product.name}</div>
-        <div class="checkout-item-meta">Size: ${item.size}</div>
+        <div class="checkout-item-meta">${isMerch ? '' : 'Size: ' + item.size}</div>
         <div class="checkout-item-quantity">
           <button class="quantity-btn" data-action="decrease">-</button>
           <span class="quantity">${item.qty}</span>
@@ -229,11 +235,11 @@ function initializeCheckoutForm() {
         // Clear cart
         localStorage.removeItem("cart");
 
-        // Show success message
-        alert("Order placed successfully! A confirmation email has been sent.");
+        // Store order data in sessionStorage for confirmation page
+        sessionStorage.setItem("orderConfirmation", JSON.stringify(formData));
 
-        // Redirect to home page
-        window.location.href = "index.html";
+        // Redirect to order confirmation page
+        window.location.href = "order-confirmation.html";
       } catch (error) {
         console.error("Error processing order:", error);
         alert("There was an error processing your order. Please try again.");
@@ -356,10 +362,18 @@ async function sendOrderConfirmation(orderData) {
 function formatOrderDetails(order) {
   return order
     .map((item) => {
-      const product = products.find((p) => p.id === item.id);
-      return `${product.name} (${item.size}) × ${item.qty} - $${
-        getProductPrice(item.size) * item.qty
-      }`;
+      let product = products.find((p) => p.id === item.id);
+      let isMerch = false;
+      if (!product && typeof merchItems !== 'undefined') {
+        product = merchItems.find((m) => m.id === item.id);
+        isMerch = !!product;
+      }
+      if (!product) return '';
+      if (isMerch) {
+        return `${product.name} × ${item.qty} - $${(item.price || product.price) * item.qty}`;
+      } else {
+        return `${product.name} (${item.size}) × ${item.qty} - $${getProductPrice(item.size) * item.qty}`;
+      }
     })
     .join("\n");
 }
@@ -367,7 +381,18 @@ function formatOrderDetails(order) {
 // Helper function to calculate total
 function calculateTotal(order) {
   return order.reduce((total, item) => {
-    return total + getProductPrice(item.size) * item.qty;
+    let product = products.find((p) => p.id === item.id);
+    let isMerch = false;
+    if (!product && typeof merchItems !== 'undefined') {
+      product = merchItems.find((m) => m.id === item.id);
+      isMerch = !!product;
+    }
+    if (!product) return total;
+    if (isMerch) {
+      return total + (item.price || product.price) * item.qty;
+    } else {
+      return total + getProductPrice(item.size) * item.qty;
+    }
   }, 0);
 }
 
