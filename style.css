@@ -563,29 +563,44 @@ h1 {
 
 .product-card-sizes,
 .product-card .add-btn {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s;
-}
-.product-card:hover .product-card-sizes,
-.product-card:hover .add-btn {
   opacity: 1;
   pointer-events: auto;
+  transition: opacity 0.2s;
 }
+
+.size-btn.selected {
+  background: #e63975;
+  color: #fff;
+  border: 2px solid #c51f5d;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(230,57,117,0.08);
+}
+
 .product-card-sizes {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 0.3rem;
-  margin: 0.2rem 0 0.1rem 0;
-  position: static;
-  background: none;
-  box-shadow: none;
-  padding: 0;
+  gap: 0.5rem;
+  margin-bottom: 0.7rem;
 }
+
 .product-card .add-btn {
-  z-index: 3;
+  width: 100%;
+  margin: 0.5rem 0 0 0;
+  padding: 0.7rem 0;
+  border-radius: 8px;
+  background: #e63975;
+  color: #fff;
+  border: none;
+  font-size: 1.08rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(230,57,117,0.08);
+  transition: background 0.18s, color 0.18s;
+}
+.product-card .add-btn:hover {
+  background: #c51f5d;
+  color: #fff;
 }
 
 .product-card:hover .product-img {
