@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Confirmed | Pot It Like It's Hot</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="images/favicon.ico" />
+</head>
+<body>
+  <header>
+    <div class="container header-flex">
+      <div class="header-left">
+        <a href="index.html" class="logo-link"><img src="images/potlogo.png" alt="Pot Logo" class="pot-logo" /></a>
+        <a href="index.html" class="site-title-link"><h1>pot it like it's hot</h1></a>
+      </div>
+      <div class="header-right">
+        <a href="about.html" class="about-link">ℹ️</a>
+        <a href="contact.html" class="contact-link">📧</a>
+        <button id="cart-btn" aria-label="View cart">
+          🛒 <span id="cart-count" class="cart-badge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="container checkout-container" style="max-width: 600px; margin: 3rem auto;">
+      <h2 style="color: #4CAF50; text-align: center;">Order Confirmed!</h2>
+      <p style="text-align: center; font-size: 1.1rem; margin-bottom: 2rem;">Thank you for your purchase. Your order has been placed successfully.</p>
+      <div id="order-summary-section" style="margin-bottom: 2rem;"></div>
+      <div id="shipping-address-section" style="margin-bottom: 2rem;"></div>
+      <div style="background: #f9f9f9; padding: 1rem 1.5rem; border-radius: 8px; text-align: center; margin-bottom: 2rem;">
+        <b>An order confirmation email has been sent to you.</b>
+      </div>
+      <div style="text-align: center;">
+        <a href="index.html" class="checkout-btn" style="padding: 0.8rem 2.2rem; font-size: 1.1rem;">Return to Home</a>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div>
+      pot it like it's hot &mdash; "Let your plants live their best life!"
+      <div style="margin-top: 0.5rem; font-size: 0.9rem;">
+        <a href="shipping.html" style="color: inherit; text-decoration: none;">Shipping & Returns</a> |
+        <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy Policy</a> |
+        <a href="questions.html" style="color: inherit; text-decoration: none;">Questions</a>
+      </div>
+      <button id="subscribe-btn" class="checkout-btn" style="margin-top: 1rem;">Subscribe to Email List</button>
+    </div>
+  </footer>
+  <div id="subscribe-modal" class="modal hidden">
+    <div class="modal-content" style="max-width: 400px;">
+      <span class="close" id="close-subscribe">&times;</span>
+      <h2 style="margin-bottom: 1rem;">Subscribe to Our Email List</h2>
+      <form id="subscribe-form">
+        <input type="email" id="subscribe-email" placeholder="Your email address" required style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border-radius: 8px; border: 1.5px solid #e0e0e0; font-size: 1rem;" />
+        <button type="submit" class="checkout-btn" style="width: 100%;">Subscribe</button>
+      </form>
+      <div id="subscribe-success" style="display: none; color: #4CAF50; margin-top: 1rem; text-align: center; font-weight: 600;">Thank you for subscribing!</div>
+    </div>
+  </div>
+  <script src="main.js"></script>
+  <script src="cart.js"></script>
+  <script>
+    document.getElementById('subscribe-btn').onclick = function() {
+      document.getElementById('subscribe-modal').classList.remove('hidden');
+      document.getElementById('subscribe-modal').classList.add('visible');
+    };
+    document.getElementById('close-subscribe').onclick = function() {
+      document.getElementById('subscribe-modal').classList.remove('visible');
+      document.getElementById('subscribe-modal').classList.add('hidden');
+    };
+    document.getElementById('subscribe-form').onsubmit = function(e) {
+      e.preventDefault();
+      document.getElementById('subscribe-form').style.display = 'none';
+      document.getElementById('subscribe-success').style.display = 'block';
+    };
+    document.getElementById('subscribe-modal').onclick = function(e) {
+      if (e.target === this) {
+        this.classList.remove('visible');
+        this.classList.add('hidden');
+      }
+    };
+    // Helper to get product info and price
+    function getProductPrice(size) {
+      if (size === "Small") return 10;
+      if (size === "Medium") return 20;
+      if (size === "Large") return 30;
+      return 0;
+    }
+    // Use products array from main.js if available, else fallback
+    let products = window.products;
+    if (!products) {
+      products = [
+        { id: "cookie-monster", name: "cookie monster" },
+        { id: "shy-guy", name: "shy guy" },
+        { id: "aquamarine", name: "aquamarine" },
+        { id: "picnic-in-the-park", name: "picnic in the park" },
+        { id: "flower-power", name: "flower power" },
+        { id: "garden-party", name: "garden party" },
+        { id: "intergalactic", name: "intergalactic" },
+        { id: "lovestruck", name: "lovestruck" },
+        { id: "moon-river", name: "moon river" },
+        { id: "spidey-senses", name: "spidey senses" },
+        { id: "funny-bunny", name: "funny bunny" },
+        { id: "rainbow-sherbet", name: "rainbow sherbet" },
+        { id: "secret-garden", name: "secret garden" },
+        { id: "ocean-eyes", name: "ocean eyes" },
+        { id: "under-the-sea", name: "under the sea" },
+        { id: "queen-of-hearts", name: "queen of hearts" },
+        { id: "violet-visions", name: "violet visions" },
+      ];
+    }
+    function getProductName(id) {
+      const p = products.find((prod) => prod.id === id);
+      return p ? p.name : id;
+    }
+    // Render order summary
+    function renderOrderConfirmation() {
+      const data = JSON.parse(sessionStorage.getItem("orderConfirmation") || "null");
+      if (!data) {
+        document.getElementById("order-summary-section").innerHTML = "<b>No order data found.</b>";
+        return;
+      }
+      // Order summary
+      let subtotal = 0;
+      let summaryHtml = `<h3 style='margin-bottom:1rem;'>Order Summary</h3><ul style='padding-left:0;list-style:none;'>`;
+      data.order.forEach(item => {
+        const name = getProductName(item.id);
+        const price = getProductPrice(item.size);
+        subtotal += price * item.qty;
+        summaryHtml += `<li style='margin-bottom:0.7rem;'><b>${name}</b> (${item.size}) × ${item.qty} - $${(price * item.qty).toFixed(2)}</li>`;
+      });
+      summaryHtml += `</ul>`;
+      // Shipping and tax (same as checkout.js)
+      const shippingCost = subtotal >= 50 ? 0 : 8.99;
+      const tax = subtotal * 0.15;
+      const total = subtotal + shippingCost + tax;
+      summaryHtml += `<div style='margin-top:1rem;'>Subtotal: <b>$${subtotal.toFixed(2)}</b></div>`;
+      summaryHtml += `<div>Shipping: <b>$${shippingCost.toFixed(2)}</b> ${subtotal >= 50 ? '(Free shipping!)' : ''}</div>`;
+      summaryHtml += `<div>Est. Taxes: <b>$${tax.toFixed(2)}</b></div>`;
+      summaryHtml += `<div style='font-size:1.13rem; font-weight:700; margin-top:0.7rem;'>Total: $${total.toFixed(2)}</div>`;
+      document.getElementById("order-summary-section").innerHTML = summaryHtml;
+      // Shipping address
+      const addressHtml = `
+        <h3 style='margin-bottom:1rem;'>Shipping Address</h3>
+        <div><b>Name:</b> ${data.name}</div>
+        <div><b>Email:</b> ${data.email}</div>
+        <div><b>Address:</b> ${data.address}</div>
+        <div><b>City:</b> ${data.city}</div>
+        <div><b>Postal Code:</b> ${data.zip}</div>
+      `;
+      document.getElementById("shipping-address-section").innerHTML = addressHtml;
+    }
+    renderOrderConfirmation();
+  </script>
+</body>
+</html> 

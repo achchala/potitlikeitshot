@@ -229,11 +229,11 @@ function initializeCheckoutForm() {
         // Clear cart
         localStorage.removeItem("cart");
 
-        // Show success message
-        alert("Order placed successfully! A confirmation email has been sent.");
+        // Store order data in sessionStorage for confirmation page
+        sessionStorage.setItem("orderConfirmation", JSON.stringify(formData));
 
-        // Redirect to home page
-        window.location.href = "index.html";
+        // Redirect to order confirmation page
+        window.location.href = "order-confirmation.html";
       } catch (error) {
         console.error("Error processing order:", error);
         alert("There was an error processing your order. Please try again.");
