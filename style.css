@@ -70,7 +70,22 @@ h1 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 2.5rem;
-  margin-top: 2.5rem;
+  margin-top: 0;
+}
+
+.merch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2.5rem;
+  margin-top: 0;
+}
+
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.5rem 1rem;
+    margin-top: 0.7rem;
+  }
 }
 
 .product-card {
@@ -78,19 +93,27 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  padding: 1.2rem 1rem 1.5rem 1rem;
+  min-width: 0;
+  height: 90%;
+  margin: 0;
 }
+
 .product-image-container {
-  position: relative;
-  max-width: 320px;
-  min-width: 200px;
   width: 100%;
+  max-width: 180px;
+  min-width: 120px;
   aspect-ratio: 1/1;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 18px;
+  border-radius: 14px;
   overflow: hidden;
-  background: transparent;
+  background: #fff;
   box-shadow: none;
   padding: 0;
 }
@@ -159,36 +182,6 @@ h1 {
   color: #800080; /* Optional: purple on hover */
 }
 
-.cart-badge {
-  background-color: #e63975;  /* a clean reddish-pink */
-  color: white;
-  border-radius: 50%;
-  padding: 2px 6px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  position: absolute;
-  top: -8px;
-  right: -12px;
-}
-
-#cart-btn {
-  position: relative;
-}
-
-/* .cart-badge {
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  padding: 2px 6px;
-  font-size: 0.75rem;
-  margin-left: 4px;
-} */
-
-/* #cart-btn:hover {
-  background: var(--primary);
-  color: #fff;
-  transform: scale(1.08) rotate(-7deg);
-} */
 #cart-count {
   background: var(--primary);
   color: #fff;
@@ -378,8 +371,8 @@ h1 {
     padding: 0 0.5rem;
   }
   .product-card {
-    padding: 1.2rem 0.7rem 1rem 0.7rem;
-    min-height: 320px;
+    padding: 0.7rem 0.3rem 1rem 0.3rem;
+    min-height: 180px;
   }
   .modal-content,
   .checkout-container {
@@ -597,6 +590,7 @@ h1 {
   font-weight: 700;
   box-shadow: 0 2px 8px rgba(230,57,117,0.08);
   transition: background 0.18s, color 0.18s;
+  align-self: flex-end;
 }
 .product-card .add-btn:hover {
   background: #c51f5d;
@@ -616,8 +610,9 @@ h1 {
   color: var(--primary-dark);
   margin-top: 0.2rem;
   margin-bottom: 0.1rem;
-  font-size: 1.08rem;
+  font-size: 1.13rem;
   letter-spacing: 0.01em;
+  min-height: 1.5em;
 }
 #modal-product-price {
   display: block;
@@ -1356,6 +1351,7 @@ h1 {
   .about-link,
   #cart-btn {
     width: 38px;
+    color: #e63975
     height: 38px;
     font-size: 1.1rem;
   }
@@ -1366,13 +1362,13 @@ h1 {
     margin-top: 1.2rem;
   }
   .product-card {
-    padding: 0.7rem 0.3rem 0.7rem 0.3rem;
-    min-height: 220px;
+    padding: 0.7rem 0.3rem 1rem 0.3rem;
+    min-height: 180px;
   }
   .product-image-container {
-    max-width: 180px;
-    min-width: 120px;
-    border-radius: 12px;
+    max-width: 120px;
+    min-width: 80px;
+    border-radius: 10px;
   }
   .product-img {
     border-radius: 12px;
@@ -1539,4 +1535,52 @@ h1 {
   outline: none;
   border-color: #4CAF50;
   box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.cart-link {
+  margin-left: 1rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  background: #e63975;
+  border-radius: 999px;
+  padding: 0.6rem 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+.cart-link:hover {
+  background: #c51f5d;
+  transform: scale(1.05);
+}
+.cart-link .cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: white;
+  color: #e63975;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  min-height: 18px;
+}
+#cart-btn {
+  position: relative;
+  background: none;
+  border: none;
+  color: #e63975
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
 }

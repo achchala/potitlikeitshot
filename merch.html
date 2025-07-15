@@ -25,7 +25,7 @@
   <main>
     <div class="container" style="max-width: 1100px; margin: 2.5rem auto;">
       <h2 style="text-align:center; margin-bottom:2.5rem;">Pot It Like It's Hot Merch</h2>
-      <div class="product-grid" id="merch-list">
+        <div class="merch-grid" id="merch-list">
         <!-- Merch items will be injected here by JS -->
       </div>
     </div>
@@ -52,7 +52,7 @@
             <img src="${item.image}" alt="${item.name}" class="product-img" style="background:#fff;" />
           </div>
           <div class="product-name">${item.name}</div>
-          <div style="font-size:0.98rem; color:#666; margin-bottom:0.7rem; min-height:48px;">${item.details}</div>
+          <div class="product-details">${item.details}</div>
           <div class="product-card-price-row" style="margin-bottom:0.7rem; font-size:1.13rem; color:#e63975; font-weight:700;">$${item.price.toFixed(2)}</div>
           <button class="add-btn" onclick="addMerchToCart('${item.id}')">Add to Cart</button>
         </div>
