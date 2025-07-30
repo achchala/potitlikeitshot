@@ -185,17 +185,114 @@ let searchTerm = "";
 let selectedTag = "";
 let sortBy = "name-asc"; // Default sort
 
+// Tag categories
+const tagCategories = {
+  "Colors": ["blue", "red", "yellow", "green", "pink", "purple", "aqua", "violet"],
+  "Characters": ["fun", "shy", "character", "cute", "spider", "bunny", "queen"],
+  "Themes": ["flower", "groovy", "garden", "party", "space", "galaxy", "love", "heart", "moon", "river", "ocean", "sea", "marine", "secret", "mystery", "dreamy"],
+  "Styles": ["modern", "colorful", "sweet", "calm"]
+};
+
 // Get all unique tags
 const allTags = [...new Set(products.flatMap((p) => p.tags))].sort();
 
-// Initialize tag filter dropdown
+// Initialize tag filter dropdown with categories
 function initializeTagFilter() {
   const tagFilter = document.getElementById("tag-filter");
-  allTags.forEach((tag) => {
-    const option = document.createElement("option");
-    option.value = tag;
-    option.textContent = tag.charAt(0).toUpperCase() + tag.slice(1);
-    tagFilter.appendChild(option);
+  
+  // Clear existing options (except the first "All Tags" that's already in HTML)
+  while (tagFilter.children.length > 1) {
+    tagFilter.removeChild(tagFilter.lastChild);
+  }
+  
+  // Add category groups
+  Object.entries(tagCategories).forEach(([category, tags]) => {
+    // Add category header
+    const categoryOption = document.createElement("option");
+    categoryOption.value = "";
+    categoryOption.textContent = `--- ${category} ---`;
+    categoryOption.disabled = true;
+    categoryOption.style.fontWeight = "bold";
+    categoryOption.style.backgroundColor = "#f0f0f0";
+    tagFilter.appendChild(categoryOption);
+    
+    // Add tags in this category
+    tags.forEach(tag => {
+      const option = document.createElement("option");
+      option.value = tag;
+      option.textContent = `  ${tag.charAt(0).toUpperCase() + tag.slice(1)}`;
+      option.style.paddingLeft = "10px";
+      tagFilter.appendChild(option);
+    });
+  });
+}
+
+// Initialize tooltips
+function initializeTooltips() {
+  const tooltipTriggers = document.querySelectorAll('.tooltip-trigger');
+  
+  tooltipTriggers.forEach(trigger => {
+    let tooltip = null;
+    let isVisible = false;
+    
+    trigger.addEventListener('click', () => {
+      // If tooltip is already visible, hide it
+      if (isVisible) {
+        if (tooltip) {
+          tooltip.classList.remove('show');
+          setTimeout(() => {
+            if (tooltip && tooltip.parentNode) {
+              tooltip.parentNode.removeChild(tooltip);
+            }
+            tooltip = null;
+          }, 200);
+        }
+        isVisible = false;
+        return;
+      }
+      
+      // Create tooltip
+      tooltip = document.createElement('div');
+      tooltip.className = 'tooltip';
+      tooltip.textContent = trigger.getAttribute('data-tooltip');
+      
+      // Position tooltip
+      const rect = trigger.getBoundingClientRect();
+      tooltip.style.left = rect.left + (rect.width / 2) + 'px';
+      tooltip.style.top = (rect.top - 10) + 'px';
+      tooltip.style.transform = 'translateX(-50%)';
+      
+      document.body.appendChild(tooltip);
+      
+      // Show tooltip
+      setTimeout(() => {
+        tooltip.classList.add('show');
+      }, 50);
+      
+      isVisible = true;
+      
+      // Hide tooltip when clicking outside
+      const hideTooltip = (e) => {
+        if (!trigger.contains(e.target) && !tooltip.contains(e.target)) {
+          if (tooltip) {
+            tooltip.classList.remove('show');
+            setTimeout(() => {
+              if (tooltip && tooltip.parentNode) {
+                tooltip.parentNode.removeChild(tooltip);
+              }
+              tooltip = null;
+            }, 200);
+          }
+          isVisible = false;
+          document.removeEventListener('click', hideTooltip);
+        }
+      };
+      
+      // Add click listener after a small delay to avoid immediate hiding
+      setTimeout(() => {
+        document.addEventListener('click', hideTooltip);
+      }, 100);
+    });
   });
 }
 
@@ -216,6 +313,77 @@ function generateStarRating(rating) {
       <span class="rating-number">${rating}</span>
     </div>
   `;
+}
+
+function updateFilterStatus() {
+  const filterStatus = document.getElementById("filter-status");
+  filterStatus.innerHTML = "";
+  
+  const activeFilters = [];
+  
+  // Check for search filter
+  if (searchTerm.trim()) {
+    activeFilters.push({
+      type: 'search',
+      label: `Search: "${searchTerm}"`,
+      clearAction: () => {
+        document.getElementById("search-bar").value = "";
+        searchTerm = "";
+        renderProducts();
+      }
+    });
+  }
+  
+  // Check for tag filter
+  if (selectedTag) {
+    activeFilters.push({
+      type: 'tag',
+      label: `Tag: ${selectedTag.charAt(0).toUpperCase() + selectedTag.slice(1)}`,
+      clearAction: () => {
+        document.getElementById("tag-filter").value = "";
+        selectedTag = "";
+        renderProducts();
+      }
+    });
+  }
+  
+  // Check for sort filter (only show if not default)
+  if (sortBy !== "name-asc") {
+    const sortLabels = {
+      "name-desc": "Name (Z-A)",
+      "rating-desc": "Top Rated",
+      "in-stock": "In Stock",
+      "out-of-stock": "Out of Stock"
+    };
+    activeFilters.push({
+      type: 'sort',
+      label: `Sort: ${sortLabels[sortBy] || sortBy}`,
+      clearAction: () => {
+        document.getElementById("sort-filter").value = "name-asc";
+        sortBy = "name-asc";
+        renderProducts();
+      }
+    });
+  }
+  
+  // Create filter badges
+  activeFilters.forEach(filter => {
+    const badge = document.createElement("div");
+    badge.className = `filter-badge ${filter.type}`;
+    badge.innerHTML = `
+      <span>${filter.label}</span>
+      <button class="clear-btn" title="Clear filter">×</button>
+    `;
+    
+    // Add click handlers
+    badge.onclick = filter.clearAction;
+    badge.querySelector(".clear-btn").onclick = (e) => {
+      e.stopPropagation();
+      filter.clearAction();
+    };
+    
+    filterStatus.appendChild(badge);
+  });
 }
 
 function renderProducts() {
@@ -244,19 +412,28 @@ function renderProducts() {
       return false;
     }
 
+    // Stock filter
+    if (sortBy === "in-stock" && !product.inStock) {
+      return false;
+    } else if (sortBy === "out-of-stock" && product.inStock) {
+      return false;
+    }
+
     return true;
   });
 
-  // Sort products
-  filtered.sort((a, b) => {
-    if (sortBy === "name-asc") {
-      return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
-    } else if (sortBy === "name-desc") {
-      return b.name.toLowerCase().localeCompare(a.name.toLowerCase());
-    } else if (sortBy === "rating-desc") {
-      return parseFloat(b.rating) - parseFloat(a.rating);
-    }
-  });
+  // Sort products (only if not filtering by stock)
+  if (sortBy !== "in-stock" && sortBy !== "out-of-stock") {
+    filtered.sort((a, b) => {
+      if (sortBy === "name-asc") {
+        return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+      } else if (sortBy === "name-desc") {
+        return b.name.toLowerCase().localeCompare(a.name.toLowerCase());
+      } else if (sortBy === "rating-desc") {
+        return parseFloat(b.rating) - parseFloat(a.rating);
+      }
+    });
+  }
 
   if (filtered.length === 0) {
     list.innerHTML =
@@ -278,6 +455,7 @@ function renderProducts() {
             ? '<div class="out-of-stock-label">Out of Stock</div>'
             : ""
         }
+        <div class="product-card-tooltip" data-product-name="${product.name}">❓</div>
       </div>
       <div class="product-name">${product.name}</div>
       ${generateStarRating(product.rating)}
@@ -300,13 +478,17 @@ function renderProducts() {
       </button>
     `;
 
-    let selectedCardSize = product.sizes[0];
+    let selectedCardSize = null;
     const priceRow = card.querySelector(".product-card-price-row");
     priceRow.style.display = "block";
     const productImg = card.querySelector(".product-img");
 
     const updateCardPrice = () => {
-      priceRow.textContent = `$${getProductPrice(selectedCardSize)}`;
+      if (selectedCardSize) {
+        priceRow.textContent = `$${getProductPrice(selectedCardSize)}`;
+      } else {
+        priceRow.textContent = "";
+      }
       card.querySelectorAll(".size-btn").forEach((btn) => {
         btn.classList.toggle("selected", btn.dataset.size === selectedCardSize);
       });
@@ -318,6 +500,9 @@ function renderProducts() {
       } else if (selectedCardSize === "Large") {
         productImg.style.transform = "scale(1.4)";
         productImg.style.transition = "transform 0.3s ease";
+      } else if (selectedCardSize === "Small") {
+        productImg.style.transform = "scale(1)";
+        productImg.style.transition = "transform 0.3s ease";
       } else {
         productImg.style.transform = "scale(1)";
         productImg.style.transition = "transform 0.3s ease";
@@ -328,7 +513,12 @@ function renderProducts() {
       if (!btn.disabled) {
         btn.onclick = (e) => {
           e.stopPropagation();
-          selectedCardSize = btn.dataset.size;
+          // If clicking the same button that's already selected, unselect it
+          if (selectedCardSize === btn.dataset.size) {
+            selectedCardSize = null;
+          } else {
+            selectedCardSize = btn.dataset.size;
+          }
           updateCardPrice();
         };
       }
@@ -340,26 +530,105 @@ function renderProducts() {
     if (!addBtn.disabled) {
       addBtn.onclick = (e) => {
         e.stopPropagation();
-        addToCart(product.id, selectedCardSize);
-        showAddToCartFeedbackModal(product.name, selectedCardSize);
+        if (selectedCardSize) {
+          addToCart(product.id, selectedCardSize);
+          showAddToCartFeedbackModal(product.name, selectedCardSize, product.id);
+        } else {
+          showSelectSizeFeedbackModal();
+        }
       };
     }
 
     card.querySelector(".product-image-container").onclick = () =>
       openProductModal(product.id);
 
+    // Add tooltip click handler
+    const tooltip = card.querySelector(".product-card-tooltip");
+    tooltip.onclick = (e) => {
+      e.stopPropagation(); // Prevent opening the modal
+      showProductTooltip(product.name);
+    };
+
     list.appendChild(card);
   });
+  
+  // Update filter status indicators
+  updateFilterStatus();
 }
 
-function showAddToCartFeedbackModal(name, size) {
+function showAddToCartFeedbackModal(name, size, productId) {
+  // Get current cart to check quantity
+  const cart = getCart();
+  const cartItem = cart.find((i) => i.id === productId && i.size === size);
+  const quantity = cartItem ? cartItem.qty : 1;
+  
   let modal = document.createElement("div");
   modal.className = "feedback-modal";
-  modal.innerHTML = `<div class="feedback-modal-content"><b>${name}</b> (${size}) added to cart!</div>`;
+  
+  // Show quantity if more than 1, otherwise just show "added to cart"
+  const quantityText = quantity > 1 ? ` (${quantity}x)` : "";
+  modal.innerHTML = `<div class="feedback-modal-content"><b>${name}</b> (${size})${quantityText} added to cart!</div>`;
+  
   document.body.appendChild(modal);
   setTimeout(() => {
     modal.remove();
   }, 1200);
+}
+
+function showProductTooltip(productName) {
+  // Remove any existing tooltips first
+  const existingTooltips = document.querySelectorAll('.product-tooltip-modal');
+  existingTooltips.forEach(tooltip => tooltip.remove());
+  
+  // Find the product to check stock status
+  const product = products.find(p => p.name === productName);
+  const isOutOfStock = product && !product.inStock;
+  
+  let modal = document.createElement("div");
+  modal.className = "feedback-modal product-tooltip-modal";
+  
+  if (isOutOfStock) {
+    modal.innerHTML = `
+      <div class="feedback-modal-content product-tooltip-content">
+        <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">😢</div>
+        <div style="font-weight: 600; margin-bottom: 0.3rem;">Sorry, this pot is out of stock!</div>
+        <div style="font-size: 0.9rem; color: #666;">Our plants are having a vacation... 🌿✨</div>
+      </div>
+    `;
+  } else {
+    modal.innerHTML = `
+      <div class="feedback-modal-content product-tooltip-content">
+        <div style="font-size: 1.2rem; margin-bottom: 0.5rem;">🌱</div>
+        <div style="font-weight: 600; margin-bottom: 0.3rem;">You want this pot?</div>
+        <div style="font-size: 0.9rem; color: #666;">Good eye! Select a size and hit "Add to Cart"</div>
+      </div>
+    `;
+  }
+  
+  document.body.appendChild(modal);
+  
+  // Use a more stable removal approach
+  setTimeout(() => {
+    if (modal && modal.parentNode) {
+      modal.style.opacity = '0';
+      modal.style.transform = 'translateY(10px) scale(0.95)';
+      setTimeout(() => {
+        if (modal && modal.parentNode) {
+          modal.parentNode.removeChild(modal);
+        }
+      }, 300);
+    }
+  }, 2500);
+}
+
+function showSelectSizeFeedbackModal() {
+  let modal = document.createElement("div");
+  modal.className = "feedback-modal";
+  modal.innerHTML = `<div class="feedback-modal-content">Please select a size first!</div>`;
+  document.body.appendChild(modal);
+  setTimeout(() => {
+    modal.remove();
+  }, 1500);
 }
 
 function openProductModal(productId) {
@@ -368,7 +637,7 @@ function openProductModal(productId) {
   selectedProduct = product;
   const cart = getCart();
   const cartItem = cart.find((i) => i.id === productId);
-  selectedSize = cartItem ? cartItem.size : product.sizes[0];
+  selectedSize = cartItem ? cartItem.size : null;
   const modalImage = document.getElementById("modal-product-image");
   modalImage.src = product.image;
   modalImage.alt = product.name;
@@ -391,7 +660,7 @@ function openProductModal(productId) {
   // Price above sizes
   document.getElementById(
     "modal-product-price"
-  ).textContent = `$${getProductPrice(selectedSize)}`;
+  ).textContent = selectedSize ? `$${getProductPrice(selectedSize)}` : "";
   // Tags
   const tagsDiv = document.getElementById("modal-product-tags");
   tagsDiv.innerHTML = "";
@@ -412,22 +681,39 @@ function openProductModal(productId) {
     sizeBtn.onclick = (e) => {
       e.stopPropagation();
       if (!product.inStock) return;
-      selectedSize = size;
+      
+      // If clicking the same button that's already selected, unselect it
+      if (selectedSize === size) {
+        selectedSize = null;
+      } else {
+        selectedSize = size;
+      }
+      
       // Update price and highlight only, do not re-call openProductModal
       document.getElementById(
         "modal-product-price"
-      ).textContent = `$${getProductPrice(selectedSize)}`;
+      ).textContent = selectedSize ? `$${getProductPrice(selectedSize)}` : "";
       sizesDiv.querySelectorAll(".size-btn").forEach((btn) => {
-        btn.classList.toggle("selected", btn.textContent === size[0]);
+        btn.classList.toggle("selected", btn.textContent === size[0] && selectedSize === size);
       });
       
       // Update image size
-      if (size === "Medium") {
+      if (selectedSize === "Medium") {
         modalImage.style.transform = "scale(1.2)";
-      } else if (size === "Large") {
+      } else if (selectedSize === "Large") {
         modalImage.style.transform = "scale(1.4)";
       } else {
         modalImage.style.transform = "scale(1)";
+      }
+      
+      // Update add to cart button state
+      const addToCartBtn = document.getElementById("modal-add-to-cart");
+      addToCartBtn.disabled = !product.inStock || !selectedSize;
+      addToCartBtn.textContent = !product.inStock ? "Out of Stock" : (!selectedSize ? "Select Size" : "Add to Cart");
+      if (!product.inStock || !selectedSize) {
+        addToCartBtn.classList.add("disabled");
+      } else {
+        addToCartBtn.classList.remove("disabled");
       }
     };
     sizesDiv.appendChild(sizeBtn);
@@ -435,9 +721,9 @@ function openProductModal(productId) {
 
   // Update add to cart button state
   const addToCartBtn = document.getElementById("modal-add-to-cart");
-  addToCartBtn.disabled = !product.inStock;
-  addToCartBtn.textContent = product.inStock ? "Add to Cart" : "Out of Stock";
-  if (!product.inStock) {
+  addToCartBtn.disabled = !product.inStock || !selectedSize;
+  addToCartBtn.textContent = !product.inStock ? "Out of Stock" : (!selectedSize ? "Select Size" : "Add to Cart");
+  if (!product.inStock || !selectedSize) {
     addToCartBtn.classList.add("disabled");
   } else {
     addToCartBtn.classList.remove("disabled");
@@ -477,8 +763,10 @@ function addToCart(productId, size) {
 document.getElementById("modal-add-to-cart").onclick = function () {
   if (selectedProduct && selectedSize && selectedProduct.inStock) {
     addToCart(selectedProduct.id, selectedSize);
-    showAddToCartFeedbackModal(selectedProduct.name, selectedSize);
+    showAddToCartFeedbackModal(selectedProduct.name, selectedSize, selectedProduct.id);
     document.getElementById("product-modal").classList.add("hidden");
+  } else if (selectedProduct && !selectedSize) {
+    showSelectSizeFeedbackModal();
   }
 };
 
@@ -626,6 +914,9 @@ window.addEventListener("DOMContentLoaded", function () {
       renderProducts();
     });
   }
+  
+  // Initialize tooltips
+  initializeTooltips();
 
   // Sort filter
   const sortFilter = document.getElementById("sort-filter");
