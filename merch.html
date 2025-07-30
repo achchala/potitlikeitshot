@@ -63,6 +63,7 @@
     function addMerchToCart(id) {
       const item = merchItems.find(m => m.id === id);
       if (!item) return;
+      
       // Use the same cart structure as other products
       let cart = JSON.parse(localStorage.getItem('cart') || '[]');
       const cartItem = cart.find(i => i.id === id && i.size === undefined);
@@ -73,16 +74,24 @@
       }
       localStorage.setItem('cart', JSON.stringify(cart));
       if (typeof updateCartCount === 'function') updateCartCount();
-      // Feedback
-      const btn = document.querySelector(`button[onclick="addMerchToCart('${id}')"]`);
-      if (btn) {
-        btn.textContent = 'Added!';
-        btn.disabled = true;
-        setTimeout(() => {
-          btn.textContent = 'Add to Cart';
-          btn.disabled = false;
-        }, 1200);
-      }
+      
+      // Show feedback modal with quantity
+      showMerchAddToCartFeedbackModal(item.name, cartItem ? cartItem.qty : 1);
+    }
+    
+    // Show merch add to cart feedback modal
+    function showMerchAddToCartFeedbackModal(name, quantity) {
+      let modal = document.createElement("div");
+      modal.className = "feedback-modal";
+      
+      // Show quantity if more than 1, otherwise just show "added to cart"
+      const quantityText = quantity > 1 ? ` (${quantity}x)` : "";
+      modal.innerHTML = `<div class="feedback-modal-content"><b>${name}</b>${quantityText} added to cart!</div>`;
+      
+      document.body.appendChild(modal);
+      setTimeout(() => {
+        modal.remove();
+      }, 1200);
     }
 
     renderMerch();
