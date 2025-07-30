@@ -139,10 +139,11 @@
           style="
             display: flex;
             gap: 1rem;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             margin: 1.5rem auto 0.5rem auto;
-            max-width: 400px;
+            max-width: 1100px;
+            padding: 0 1.5rem;
           "
         >
           <input
@@ -150,6 +151,7 @@
             id="search-bar"
             placeholder="Search pots..."
             style="
+              min-width: 400px;
               flex: 1;
               padding: 0.7rem 1rem;
               font-size: 1.1rem;
@@ -161,6 +163,7 @@
           <select
             id="tag-filter"
             style="
+              width: 120px;
               padding: 0.7rem 1rem;
               font-size: 1.1rem;
               border-radius: 8px;
@@ -174,6 +177,7 @@
           <select
             id="sort-filter"
             style="
+              width: 120px;
               padding: 0.7rem 1rem;
               font-size: 1.1rem;
               border-radius: 8px;
@@ -185,8 +189,49 @@
             <option value="name-asc">Name (A-Z)</option>
             <option value="name-desc">Name (Z-A)</option>
             <option value="rating-desc">Top Rated</option>
+            <option value="in-stock">In Stock</option>
+            <option value="out-of-stock">Out of Stock</option>
           </select>
+          <button
+            id="filter-help-btn"
+            class="tooltip-trigger"
+            data-tooltip="Hey pop-lovers! 🌱 Lost? Don't worry, we've got you covered!&#10;&#10;🔍 Search: Find your dream pot by name&#10;🏷️ Tags: Explore by colors, characters, themes & vibes&#10;📊 Sort: Organize by name, rating, or what's in stock&#10;&#10;Mix & match to discover your perfect plant companion! 🌿✨"
+            style="
+              width: 30px;
+              height: 30px;
+              padding: 0;
+              font-size: 1.2rem;
+              border-radius: 8%;
+              border: 2px solid var(--primary);
+              background: white;
+              cursor: pointer;
+              color: var(--primary-dark);
+              transition: all 0.3s ease;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-sizing: border-box;
+            "
+            title="Filter Help"
+          >
+            ❓
+          </button>
         </div>
+        
+        <!-- Filter Status Indicators -->
+        <div id="filter-status" style="
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          justify-content: center;
+          align-items: center;
+          margin: 1rem auto;
+          max-width: 600px;
+          min-height: 2rem;
+        ">
+          <!-- Active filters will be displayed here -->
+        </div>
+        
         <div class="product-grid" id="product-list">
           <!-- Products will be injected here by JS -->
         </div>
